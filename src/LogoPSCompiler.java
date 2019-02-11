@@ -2,12 +2,16 @@ package logoCompiler;
 
 import logoCompiler.lexer.*;
 import logoCompiler.parser.*;
+import java.io.*;
 
 public class LogoPSCompiler {
   public static void main(String[] args) {
 
-    Parser.t = Lexer.lex();
-    //Parsing disabled 
+
+    FileReader logoFile = new FileReader(args[0]);
+
+    Parser.t = Lexer.lex(logoFile);
+    //Parsing disabled
     //Prog prog = Prog.parse();
 
     if (!Parser.error) {
@@ -17,7 +21,7 @@ public class LogoPSCompiler {
       psEpilogue();
     }
   }
-  
+
   public static void psPrologue() {
 	    System.out.println("%!PS-Adobe-3.0");	// Adobe header
 	    /* rest of prologue ... */
