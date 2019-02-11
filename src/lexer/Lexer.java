@@ -5,18 +5,28 @@ import java.util.*;
 public final class Lexer {
   static int ch = ' ';
 
-  public static Token lex(FileReader logoFile) {
+  public static Token lex(FileReader logoFile) throws InvalidTokenException{
 
-    //stores the precedence of tokens
-    int precedence = 0;
+    //stores the proc Tokens
+    ArrayList<PROCToken> procTokens = new ArrayList<PROCToken>();
+    int currentProc = 0;
     //For reading the file
     BufferedReader logoBReader = new BufferedReader(logoFile);
 
     while(line = BufferedReader.readLine() != null){
       if(!line.isEmpty()){
-        line = line.replace("\t", "");
-        
-      }
+        line = line.replace("\t", "").split(" ");
+
+        //Check that first word in line is PROC and return error if not
+        //Chec that 0 index is equal to PROC
+
+
+        while(line[0] != "PROC"){
+          procTokens[currentProc]
+          
+        }
+        procTokens.add(Tokeniser.procTokeniser(line));
+        currentProc++;
     }
     catch(FileNotFoundException ex) {
       System.out.println("Unable to open file '" + fileName + "'");

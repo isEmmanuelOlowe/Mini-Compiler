@@ -10,6 +10,8 @@ public class LogoPSCompiler {
 
     FileReader logoFile = new FileReader(args[0]);
 
+    //PrintWriter writer = new
+
     Parser.t = Lexer.lex(logoFile);
     //Parsing disabled
     //Prog prog = Prog.parse();
