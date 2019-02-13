@@ -22,11 +22,10 @@ public final class Lexer {
 
 
         while(line[0] != "PROC"){
-          procTokens[currentProc]
-          
+          procTokens[currentProc].addStatement(line);
         }
-        procTokens.add(Tokeniser.procTokeniser(line));
         currentProc++;
+        procTokens.add(Tokeniser.procTokeniser(line));
     }
     catch(FileNotFoundException ex) {
       System.out.println("Unable to open file '" + fileName + "'");
