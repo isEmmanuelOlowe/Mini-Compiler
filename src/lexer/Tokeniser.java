@@ -9,6 +9,8 @@ public class Tokeniser {
   //private Map<String, Token> keywords = new HashMap<String, Token>();
 
   private String[] keywords = {"PROC", "IF", "ELSE", "ENDIF", "THEN", "FORWARD", "LEFT", "RIGHT"};
+  private String[] comparisonOperators = {"==", "!=", ">" "<", "<=", ">="};
+  private String[] operators = {"+", "-", "/", "*"};
   public static void Tokeniser() throws InvalidToken {
 
   }
@@ -27,25 +29,23 @@ public class Tokeniser {
   }
 
   public static String isKeyword(String word) {
-
-    String foundKeyword = "none";
-    for (String keyword: keywords) {
-      if (keyword.equals(word)) {
-        foundKeyword = keyword;
-      }
-    }
-    return foundKeyword;
+    String found = isInList(word, keywords);
+    return found;
   }
 
-  public static boolean isMove(String word) {
-
-    boolean hasMoveKeyword = false;
-     //checks is inclusive
-    for (String keyword: Arrays.copyOfRange(keywords,  5, 7){
-      if (keyword.equals(word)) {
-        hasMoveKeyword = true;
+  //checks if an list contains an item
+  public static boolean isInList(String parameter, String list) {
+    //default value
+    String found = "none";
+    for (String item: list) {
+      if (parameter.equals(item)) {
+        found = item;
       }
     }
+    return found;
+  }
+  public static boolean isMove(String word) {
+    boolean hasMoveKeyword = (isInList(word, Arrays.copyOfRange(keywords, 5 ,7)))? true: false;
     return hasMoveKeyword;
   }
 
@@ -66,7 +66,7 @@ public class Tokeniser {
 
   //can generalise for loop linear search to method
   public static boolean isComparisonOperator(String word) {
-    String[] operators = {"==", "!=", ">" "<", "<=", ">="};
+    String[] comparisonOperators = {"==", "!=", ">" "<", "<=", ">="};
     boolean isOperand = false;
     for (String operator: operators) {
       if (operator.equals(word)) {
@@ -88,6 +88,7 @@ public class Tokeniser {
 
   }
 
+  //parameter checking required to be added.
   public static isMethod(String[] line) {
 
     boolean method = false;
@@ -99,7 +100,7 @@ public class Tokeniser {
 
 
   //Implement Syntax checking
-  public static isIfStatement(String[] line, String parameter) {
+  public static boolean isIfStatement(String[] line, String parameter) {
     boolean isIfStatement = false;
     if (line[0].equals("IF") && line[4].equals("THEN")) {
       //You can call methods in if statement
@@ -115,14 +116,20 @@ public class Tokeniser {
   //Implement Syntax checking
   public static boolean isCalculation(String[] line, String parameter, boolean isMethod) throw InvalidSyntax {
     boolean calculation = false;
-    if (line[1].equals("(") && (line[3].equals("(") || line[5].equals(")")) {
-      if (isInteger(line[4]) && isMathOperator(line[3])) {
-        //need way to check if parameter
-        calculation = true;
+    if (line[1].equals("(") ) {
+      if (line[line.length() - 1]) {
+        if (isInteger(line[4]) && isMathOperator(line[3])) {
+          //need way to check if parameter
+          calculation = true;
+        }
+      }
+      else {
+        throw new UnpairedDelimiterException("Missing - )");
       }
     }
-  else if (isNumber(line[1]) && isMethod) {
-    throw new InvalidSyntax("Invalid Statement");
+  //checks user has used brackets w
+  else if (line[1] "(" && isMethod(line)) {
+    throw new InvalidMethodCall("( - Delimiter Expected");
   }
     return calculation;
   }

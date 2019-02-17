@@ -1,22 +1,29 @@
 package logoCompiler;
 
-import logoCompiler.lexer.*;
+import logoCompiler.lexer.Lexer;
 import logoCompiler.parser.*;
-import java.io.*;
 
+/**
+* The main class of the compiler program, will execute high level instructions.
+*
+* @param args only takes one argument which is the filename of logo file you which to compile
+*/
 public class LogoPSCompiler {
   public static void main(String[] args) {
 
-
-    FileReader logoFile = new FileReader(args[0]);
-
-    //PrintWriter writer = new
-
-    Parser.t = Lexer.lex(logoFile);
-    //Parsing disabled
-    //Prog prog = Prog.parse();
-
-    if (!Parser.error) {
+    if (args.length == 1) {
+      String logFileName = args[0];
+    }
+    //Tokenises The whole logo file
+    Parser.t = Lexer.lex(logoFileName);
+    //checks if any errors occured in the parsing of the file.
+    if (ErrorHandler.areErrors()) {
+      //reports the errors occured to the user
+      ErrorHandler.reportErrors();
+    }
+    //add some way to parse the file
+    //only parse the file if no errors have occured
+    else if(!Parser.error) {
       psPrologue();
       //Codegen disabled
       //prog.codegen();
