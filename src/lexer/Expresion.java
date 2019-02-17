@@ -15,4 +15,9 @@ private String right;
   public Expression(String operator, String left, String Right){
 
   }
+
+  public void printToken(){
+
+  }
+
 }

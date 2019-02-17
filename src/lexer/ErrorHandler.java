@@ -45,9 +45,13 @@ public class ErrorHandler {
     currentString = line;
   }
 
+  public void printToken(){
+
+  }
+
   /*
   * Write method which:
   * - chekcs methods called exists
-  * - chekck contains PROC MAIN 
+  * - chekck contains PROC MAIN
   */
 }

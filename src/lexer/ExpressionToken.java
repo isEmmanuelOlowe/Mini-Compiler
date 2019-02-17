@@ -1,4 +1,4 @@
-public class ExpressionToken {
+public class ExpressionToken extends Expression {
 
   Expression left;
   Expression right;
@@ -15,4 +15,9 @@ public class ExpressionToken {
 
     //convert expression to tree
   }
+
+  public void printToken(){
+
+  }
+
 }

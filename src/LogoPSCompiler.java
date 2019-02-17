@@ -6,7 +6,7 @@ import logoCompiler.parser.*;
 /**
 * The main class of the compiler program, will execute high level instructions.
 *
-* @param args only takes one argument which is the filename of logo file you which to compile
+* @param args only takes one argument which is the filename of logo file you whish to compile
 */
 public class LogoPSCompiler {
   public static void main(String[] args) {

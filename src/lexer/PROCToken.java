@@ -113,4 +113,15 @@ public final class PROCToken extends Token {
       ErrorHandler.addError("If Statement in previous PROC METHOD incomplete");
     }
   }
+
+  public void printToken(){
+      parser.add("/" + this.statement + " {" );
+
+      for (Token token: statements){
+        parser.add(token);
+      }
+
+      parser.add("} def");
+  }
+
 }

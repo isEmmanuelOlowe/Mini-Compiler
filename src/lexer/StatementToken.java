@@ -2,6 +2,7 @@ package logoCompiler.lexer;
 
 public final class StatementToken extends Token {
 
+  //typeMove (Name of method being called)
   private String typeMove;
   private String parameter;
   private String operator;
@@ -25,4 +26,11 @@ public final class StatementToken extends Token {
     this.isCalculation = true;
     this.isMethod = isMethod;
   }
+
+  public void printToken(){
+    parse.add(parameter + " exch def");
+    //call procedure
+    parse.add(typeMove);
+  }
+
 }

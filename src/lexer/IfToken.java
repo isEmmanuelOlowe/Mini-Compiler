@@ -93,4 +93,21 @@ public final class IfToken extends Token {
   public void invalid(){
     isFailedComplete = true;
   }
+
+  public void printToken(){
+    this.compared1.printToken();
+    this.compared2.printToken();
+    parse.add(PSDictionary.convertToPSOperator(this.operator));
+    parse.add("{");
+    for (Token met: conditionMet) {
+      parse.add(met);
+    }
+    parse.add("} {");
+
+    for (Token failed: conditionFailed) {
+      parse.add(failed);
+    }
+    parse.add("} ifelse");
+  }
+
 }
