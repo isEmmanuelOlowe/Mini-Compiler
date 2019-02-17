@@ -4,7 +4,7 @@ public final class StatementToken extends Token {
 
   //typeMove (Name of method being called)
   private String typeMove;
-  private String parameter;
+  private Expression parameter;
   private String operator;
   private String valueMove;
   private boolean isCalculation;

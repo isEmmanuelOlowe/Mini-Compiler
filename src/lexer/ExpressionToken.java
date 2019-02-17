@@ -5,7 +5,6 @@ public class ExpressionToken extends Expression {
   String operator;
   String left;
   String right;
-  isSingle;
   /**
   * Breaks down mathematical Binary Expression Tree.
   *

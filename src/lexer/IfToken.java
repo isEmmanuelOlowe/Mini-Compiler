@@ -21,7 +21,7 @@ public final class IfToken extends Token {
 
   public void endIfFound() throws CompilationErrorException {
     if(!isMetComplete) {
-      throw new IfCompilationErrorException("No Else Condition Statements found");
+      ErrorHandler("IF Statements Must contain ELSE command");
     }
     this.isFailedComplete = true;
   }

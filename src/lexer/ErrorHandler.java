@@ -1,7 +1,7 @@
 import java.lang.Exception;
 import java.util.ArrayList;
 
-public class ErrorHandler {
+public final class ErrorHandler {
 
   private static ArrayList<String> errorsOccured = ArrayList<String>;
   //The line number of the current line being read
@@ -39,16 +39,22 @@ public class ErrorHandler {
     }
   }
 
-  public void addString(String line) {
+  public static void addString(String line) {
     //increments line number
     currentLine++;
     currentString = line;
   }
 
+<<<<<<< HEAD
   public void printToken(){
 
   }
 
+=======
+  public static void getCurrentLine() {
+    return currentLine;
+  }
+>>>>>>> 4a9ba5886cb36d404cd69ef0b2ae62eb64ea81a5
   /*
   * Write method which:
   * - chekcs methods called exists
