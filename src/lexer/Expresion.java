@@ -1,12 +1,5 @@
 
-public final class ExpressionToken extends Token {
-
-private Expression left;
-private Expression right;
-private String operator;
-private String left;
-private String right;
-
+public abstract class Expression extends Token {
 
   public Expression(String ){
 

@@ -11,68 +11,76 @@ import logoCompiler.parser.*;
 public class LogoPSCompiler {
   public static void main(String[] args) {
 
+    String logFileName;
+    String psFileName;
+
     if (args.length == 1) {
-      String logFileName = args[0];
+      logFileName = args[0];
+      psFileName = logoFileName.split("\\.")[0] + ".ps";
+      //Tokenises The whole logo file
+      Parser.t = Lexer.lex(logoFileName);
+      //checks if any errors occured in the parsing of the file.
+      if (ErrorHandler.areErrors()) {
+        //reports the errors occured to the user
+        ErrorHandler.reportErrors();
+      }
+      //add some way to parse the file
+      //only parse the file if no errors have occured
+      else if(!Parser.error) {
+        psPrologue();
+        Parser.codeGen(psFileName);
+        psEpilogue();
+        Parser.printFinal();
+      }
     }
-    //Tokenises The whole logo file
-    Parser.t = Lexer.lex(logoFileName);
-    //checks if any errors occured in the parsing of the file.
-    if (ErrorHandler.areErrors()) {
-      //reports the errors occured to the user
-      ErrorHandler.reportErrors();
-    }
-    //add some way to parse the file
-    //only parse the file if no errors have occured
-    else if(!Parser.error) {
-      psPrologue();
-      //Codegen disabled
-      //prog.codegen();
-      psEpilogue();
+    else {
+      //USAGE Information for program
+      System.out.println("USAGE: java LogoPSCompiler <logo_file>");
     }
   }
 
   public static void psPrologue() {
-	    writer.println("%!PS-Adobe-3.0");	// Adobe header
+	    parser.add("%!PS-Adobe-3.0");	// Adobe header
 	    /* rest of prologue ... */
-	    writer.println("/Xpos    { 300 } def");
-	    writer.println("/Ypos    { 500 } def");
-	    writer.println("/Heading { 0   } def");
-	    writer.println("/Arg     { 0   } def");
+	    parser.add("/Xpos    { 300 } def");
+	    parser.add("/Ypos    { 500 } def");
+	    parser.add("/Heading { 0   } def");
+	    parser.add("/Arg     { 0   } def");
 	    //Implementation of Right, Left and Forward procedures in PostScript
-	    writer.println("/Right   {");
-	    writer.println("Heading exch add Trueheading");
-	    writer.println("/Heading exch def");
-	    writer.println("} def");
-	    writer.println("/Left {");
-	    writer.println("Heading exch sub Trueheading");
-	    writer.println("/Heading exch def");
-	    writer.println("} def");
-	    writer.println("/Trueheading {");
-	    writer.println("360 mod dup");
-	    writer.println("0 lt { 360 add } if");
-	    writer.println("} def");
-	    writer.println("/Forward {");
-	    writer.println("dup  Heading sin mul");
-	    writer.println("exch Heading cos mul");
-	    writer.println("2 copy Newposition");
-	    writer.println("rlineto");
-	    writer.println("} def");
-	    writer.println("/Newposition {");
-	    writer.println("Heading 180 gt Heading 360 lt");
-	    writer.println("and { neg } if exch");
-	    writer.println("Heading  90 gt Heading 270 lt");
-	    writer.println("and { neg } if exch");
-	    writer.println("Ypos add /Ypos exch def");
-	    writer.println("Xpos add /Xpos exch def");
-	    writer.println("} def");
+	    parser.add("/Right   {");
+	    parser.add("Heading exch add Trueheading");
+	    parser.add("/Heading exch def");
+	    parser.add("} def");
+	    parser.add("/Left {");
+	    parser.add("Heading exch sub Trueheading");
+	    parser.add("/Heading exch def");
+	    parser.add("} def");
+	    parser.add("/Trueheading {");
+	    parser.add("360 mod dup");
+	    parser.add("0 lt { 360 add } if");
+	    parser.add("} def");
+	    parser.add("/Forward {");
+	    parser.add("dup  Heading sin mul");
+	    parser.add("exch Heading cos mul");
+	    parser.add("2 copy Newposition");
+	    parser.add("rlineto");
+	    parser.add("} def");
+	    parser.add("/Newposition {");
+	    parser.add("Heading 180 gt Heading 360 lt");
+	    parser.add("and { neg } if exch");
+	    parser.add("Heading  90 gt Heading 270 lt");
+	    parser.add("and { neg } if exch");
+	    parser.add("Ypos add /Ypos exch def");
+	    parser.add("Xpos add /Xpos exch def");
+	    parser.add("} def");
 	  }
 
 	  public static void psEpilogue() {
 	    /* epilogue ... */
-	    writer.println("Xpos Ypos moveto");
+	    parser.add("Xpos Ypos moveto");
 	    //Call Main to start
-	    writer.println("MAIN");
-	    writer.println("stroke");
-	    writer.println("showpage");
+	    parser.add("MAIN");
+	    parser.add("stroke");
+	    parser.add("showpage");
 	  }
 }

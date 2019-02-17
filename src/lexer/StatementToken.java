@@ -3,7 +3,7 @@ package logoCompiler.lexer;
 public final class StatementToken extends Token {
 
   private String typeMove;
-  private String parameter;
+  private Expression parameter;
   private String operator;
   private String valueMove;
   private boolean isCalculation;

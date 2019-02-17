@@ -108,7 +108,7 @@ public final class PROCToken extends Token {
     return complete;
   }
 
-  private void close() throws {
+  private void close() {
     if(!lastIfCompleted()){
       ErrorHandler.addError("If Statement in previous PROC METHOD incomplete");
     }

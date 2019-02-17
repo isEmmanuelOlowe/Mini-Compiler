@@ -92,7 +92,7 @@ public class Tokeniser {
   public static isMethod(String[] line) {
 
     boolean method = false;
-    if (line[1].equals("(") && (line[3].equals("(") || line[5].equals(")"))){
+    if (line[1].equals("(") && line[line.length - 1].equals(")")) {
       method = true;
     }
     return method;
@@ -102,7 +102,8 @@ public class Tokeniser {
   //Implement Syntax checking
   public static boolean isIfStatement(String[] line, String parameter) {
     boolean isIfStatement = false;
-    if (line[0].equals("IF") && line[4].equals("THEN")) {
+    //checks first and last keywords are if and then
+    if (line[0].equals("IF") && line[line.length - 1].equals("THEN")) {
       //You can call methods in if statement
       if (line[1].equals(parameter) && isNumber(line[3])) {
         if (isComparisonOperator(line[2])) {
