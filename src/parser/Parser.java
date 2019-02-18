@@ -7,7 +7,6 @@ import java.io.IOException;
 public final class Parser {
   public static ProcToken[] t;
   public static boolean error = false;
-<<<<<<< HEAD
 
   public static void codeGen(String fileName){
     for (ProcToken token: t) {
@@ -15,7 +14,6 @@ public final class Parser {
     }
   }
 
-=======
   public static ArrayList<String> lines = new ArrayList<String>;
 
   //adds a line to lines of statements
@@ -37,5 +35,4 @@ public final class Parser {
       System.out.println("Error Occured" + ex.getMessage());
     }
   }
->>>>>>> 4a9ba5886cb36d404cd69ef0b2ae62eb64ea81a5
 }
