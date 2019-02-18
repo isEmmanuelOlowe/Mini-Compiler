@@ -45,16 +45,14 @@ public final class ErrorHandler {
     currentString = line;
   }
 
-<<<<<<< HEAD
   public void printToken(){
 
   }
 
-=======
   public static void getCurrentLine() {
     return currentLine;
   }
->>>>>>> 4a9ba5886cb36d404cd69ef0b2ae62eb64ea81a5
+
   /*
   * Write method which:
   * - chekcs methods called exists
