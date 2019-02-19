@@ -8,9 +8,4 @@ public class IfCompilationException extends Exception {
   public IfCompilationException(String msg) {
     super(msg);
   }
-
-  public void printToken(){
-
-  }
-
 }

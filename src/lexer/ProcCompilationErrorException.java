@@ -8,9 +8,4 @@ public class ProcCompilationErrorException extends Exception {
   public ProcCompilationErrorException(String msg) {
     super(msg);
   }
-
-  public void printToken(){
-
-  }
-
 }

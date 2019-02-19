@@ -45,10 +45,6 @@ public final class ErrorHandler {
     currentString = line;
   }
 
-  public void printToken(){
-
-  }
-
   public static void getCurrentLine() {
     return currentLine;
   }
