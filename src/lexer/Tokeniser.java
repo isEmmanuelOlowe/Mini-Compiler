@@ -2,30 +2,31 @@ package logoCompiler.lexer;
 
 import java.util.Map;
 import java.util.HashMap;
-
+import java.util.ArrayList;
+import java.util.Arrays;
 public class Tokeniser {
 
   //remeber to cast before use
   //private Map<String, Token> keywords = new HashMap<String, Token>();
 
-  private String[] keywords = {"PROC", "IF", "ELSE", "ENDIF", "THEN", "FORWARD", "LEFT", "RIGHT"};
-  private String[] comparisonOperators = {"==", "!=", ">" "<", "<=", ">="};
-  private String[] operators = {"+", "-", "/", "*"};
-  public static void Tokeniser() throws InvalidToken {
+  private static String activeParameter;
+  private static String[] keywords = {"PROC", "IF", "ELSE", "ENDIF", "THEN", "FORWARD", "LEFT", "RIGHT"};
+  private static String[] comparisonOperators = {"==", "!=", ">", "<", "<=", ">="};
+  private static String[] operators = {"+", "-", "/", "*"};
 
-  }
 
-  public static Token procTokeniser() {
-
-  }
-
-  public static Token statementTokeniser(String[] line, String parameter) {
-    //run calculation once
-    if(isMove(line[0])){
-      if(isCalculation(line, parameter, false)){
-
+  public static boolean isActiveParameter(String item) {
+    boolean isParameter = true;
+    if (activeParameter != null){
+      if(!activeParameter.equals(item)){
+        isParameter = false;
       }
     }
+    return isParameter;
+  }
+
+  public static void setActiveParameter(String item) {
+    activeParameter = item;
   }
 
   public static String isKeyword(String word) {
@@ -34,7 +35,7 @@ public class Tokeniser {
   }
 
   //checks if an list contains an item
-  public static boolean isInList(String parameter, String list) {
+  public static String isInList(String parameter, String[] list) {
     //default value
     String found = "none";
     for (String item: list) {
@@ -44,94 +45,89 @@ public class Tokeniser {
     }
     return found;
   }
+
   public static boolean isMove(String word) {
-    boolean hasMoveKeyword = (isInList(word, Arrays.copyOfRange(keywords, 5 ,7)))? true: false;
+    boolean hasMoveKeyword = (isInList(word, Arrays.copyOfRange(keywords, 5 ,7))) == "none"? true: false;
     return hasMoveKeyword;
   }
 
+  //checks a number is a valid integer
   public static boolean isInteger(String number) {
-    isNumber = false;
+    boolean isNumber = false;
     try {
-      //checks if it can be processed as an integer
-      int value = Integer.parseInt(number);
-
-      this.statements.add(new StatementToken(number));
-      isNumber = true;
+      //checks the number does not start with zero unless its value is zero
+      if (number.charAt(0) == '0' && !number.equals("0")) {
+        isNumber = false;
+      }
+      else {
+        //checks if it can be processed as an integer
+        int value = Integer.parseInt(number);
+        isNumber = true;
+      }
     }
     catch (NumberFormatException e) {
-      System.out.println("Cannot parse as Integer" + number);
+      ErrorHandler.addError("Cannot parse as Integer: " + number);
     }
     return isNumber;
   }
 
-  //can generalise for loop linear search to method
+
   public static boolean isComparisonOperator(String word) {
-    String[] comparisonOperators = {"==", "!=", ">" "<", "<=", ">="};
-    boolean isOperand = false;
-    for (String operator: operators) {
-      if (operator.equals(word)) {
-        isOperand = true;
-      }
-    }
+    boolean isOperand = isInList(word, comparisonOperators) != "none"? true: false;
     return isOperand;
   }
 
   public static boolean isMathOperator(String word) {
-    String[] operators = {"+", "-", "/"};
-    boolean isOperand = false;
-    for (String operator: operators) {
-      if (operator.equals(word)) {
-        isOperand = true;
-      }
-    }
+    boolean isOperand = isInList(word, operators) != "none"? true: false;
     return isOperand;
-
   }
 
-  //parameter checking required to be added.
-  public static isMethod(String[] line) {
+  public static boolean validCalculation(String[] line) {
+    boolean valid = true;
+    int noOpenBrackets = 0;
+    int noCloseBrackets = 0;
+    ArrayList<String> elements = new ArrayList<String>();
 
-    boolean method = false;
-    if (line[1].equals("(") && line[line.length - 1].equals(")")) {
-      method = true;
-    }
-    return method;
-  }
-
-
-  //Implement Syntax checking
-  public static boolean isIfStatement(String[] line, String parameter) {
-    boolean isIfStatement = false;
-    //checks first and last keywords are if and then
-    if (line[0].equals("IF") && line[line.length - 1].equals("THEN")) {
-      //You can call methods in if statement
-      if (line[1].equals(parameter) && isNumber(line[3])) {
-        if (isComparisonOperator(line[2])) {
-          isIfStatement = true;
-        }
+    for (String item: line) {
+      if (item.equals("(")){
+        noOpenBrackets++;
       }
-    }
-    return isIfStatement;
-  }
-
-  //Implement Syntax checking
-  public static boolean isCalculation(String[] line, String parameter, boolean isMethod) throw InvalidSyntax {
-    boolean calculation = false;
-    if (line[1].equals("(") ) {
-      if (line[line.length() - 1]) {
-        if (isInteger(line[4]) && isMathOperator(line[3])) {
-          //need way to check if parameter
-          calculation = true;
-        }
+      else if(item.equals(")")){
+        noCloseBrackets++;
       }
       else {
-        throw new UnpairedDelimiterException("Missing - )");
+        //adds all non-bracekts to arraylist for further processing
+        elements.add(item);
       }
     }
-  //checks user has used brackets w
-  else if (line[1] "(" && isMethod(line)) {
-    throw new InvalidMethodCall("( - Delimiter Expected");
-  }
-    return calculation;
+
+    //caculations must have odd number of elements
+    if(elements.size() %  2 == 1){
+      for (int i = 0; i < elements.size(); i++) {
+        if (i % 2 == 0){
+          //cehcks wether the item is a parameter
+          if (!isActiveParameter(elements.get(i))){
+            if(!isInteger(elements.get(i))){
+              valid = false;
+              ErrorHandler.addError("Invalid number : " + elements.get(i));
+            }
+          }
+        }
+        else if (!isMathOperator(elements.get(i))){
+          valid = false;
+          ErrorHandler.addError("Invalid Operator: " + elements.get(i));
+        }
+      }
+    }
+    else {
+      valid = false;
+      ErrorHandler.addError("Invalid Calculation");
+    }
+    //makes sure all brackets are close in calculations
+    if (noOpenBrackets != noCloseBrackets) {
+      ErrorHandler.addError("EXISTS UNPAIRED Brackets");
+      valid = false;
+    }
+    return valid;
   }
 }

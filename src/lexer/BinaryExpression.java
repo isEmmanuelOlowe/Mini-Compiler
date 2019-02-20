@@ -1,5 +1,8 @@
-import java.util.Arrays;
+package logoCompiler.lexer;
 
+import java.util.Arrays;
+import logoCompiler.parser.Parser;
+import parser.PSDictionary;
 /**
 * Turns string calculations into binary expressions.
 */
@@ -39,7 +42,7 @@ public final class BinaryExpression extends Expression {
     comparedLeft.print();
     comparedRight.print();
     //adds the operator to list of items to list of things that need to be printed
-    System.out.println(PSDictionary.convertToPSOperator(this.operator));
+    Parser.add(PSDictionary.convertToPSOperator(this.operator));
   }
 
   /**

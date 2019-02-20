@@ -1,30 +1,44 @@
 package logoCompiler.parser;
-import  logoCompiler.lexer.*;
+
+import lexer.*;
 import java.util.ArrayList;
 import java.io.PrintWriter;
 import java.io.IOException;
 
+/**
+* Converts Token to PS file.
+*/
 public final class Parser {
-  public static ProcToken[] t;
-  public static boolean error = false;
+  //stores all the methods that fun in the logo file
+  public static ArrayList<PROCToken> t;
+  //stores the different ps commands required to be written to the file
+  public static ArrayList<String> lines = new ArrayList<String>();
 
-  public static void codeGen(String fileName){
-    for (ProcToken token: t) {
+  /**
+  * Generates a list of all the ps commands from the token.
+  */
+  public static void codeGen(){
+    //setups the hashmap which will allow for operator conversion
+    PSDictionary.setup();
+    for (PROCToken token: t) {
       token.printToken();
     }
   }
 
-  public static ArrayList<String> lines = new ArrayList<String>;
-
-  //adds a line to lines of statements
-  public static add(String line){
+  /**
+  * adds a line of ps to the array of commands that need to be written.
+  * @param line the line to be written
+  */
+  public static void add(String line){
     lines.add(line);
     //sets up hash map in PSDictionary
-    PSDictionary.setup();
   }
 
-  //prints all the PostScript code to a file
-  public static printFinal(fileName){
+  /**
+  * print all of the ps commands to a file.
+  * @param fileName the name of the file to be written to
+  */
+  public static void printFinal(String fileName){
     try {
       PrintWriter writer = new PrintWriter(fileName);
       for (String line: lines) {
@@ -32,7 +46,7 @@ public final class Parser {
       }
     }
     catch (IOException ex) {
-      System.out.println("Error Occured" + ex.getMessage());
+      System.out.println("Error Occured: " + ex.getMessage());
     }
   }
 }

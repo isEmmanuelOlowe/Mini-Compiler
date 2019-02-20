@@ -1,36 +1,58 @@
 package logoCompiler.lexer;
 
+import logoCompiler.parser.Parser;
+import java.util.Arrays;
+
 public final class StatementToken extends Token {
 
   //typeMove (Name of method being called)
   private String typeMove;
   private Expression parameter;
-  private String operator;
-  private String valueMove;
-  private boolean isCalculation;
-  private boolean isMethod;
 
-  public StatementToken(String typeMove, String valueMove, boolean isMethod) {
-    this.typeMove = typeMove;
-    this.valueMove = valueMove;
-    this.isCalculation = false;
-    this.isMethod = isMethod;
+  public StatementToken(String[] line) {
+    if (isValidStatement(line)){
+      this.typeMove = line[0];
+      this.parameter = addExpression(Arrays.copyOfRange(line, 1, line.length));
+    }
   }
 
-  public StatementToken(String typeMove, String parameter, String operator, String valueMove, boolean isMethod) {
+  public boolean isValidStatement(String[] line) {
 
-    this.typeMove = typeMove;
-    this.parameter = parameter;
-    this.operator = operator;
-    this.valueMove = valueMove;
-    this.isCalculation = true;
-    this.isMethod = isMethod;
+    boolean valid = false;
+    if (Tokeniser.isMove(line[0])) {
+      if (Tokeniser.validCalculation(Arrays.copyOfRange(line, 1, line.length))) {
+        valid = true;
+      }
+    }
+    else {
+      if (line[2].equals("(") && line[line.length - 1].equals(")")) {
+        if (Tokeniser.validCalculation(Arrays.copyOfRange(line, 1, line.length))) {
+          ErrorHandler.addMethodCall(line[0]);
+          valid = true;
+        }
+      }
+      else {
+        ErrorHandler.addError("Method must be called from within brackets");
+      }
+    }
+    return valid;
   }
 
-  public void printToken(){
-    parse.add(parameter + " exch def");
+  public void printToken() {
+    Parser.add(parameter + " exch def");
     //call procedure
-    parse.add(typeMove);
+    Parser.add(typeMove);
   }
 
+  private Expression addExpression(String[] expression) {
+    Expression compared;
+    //if expression only contains one element it must be primary statement
+    if (expression.length == 1){
+      compared = new PrimaryExpression(expression[0]);
+    }
+    else {
+      compared = new BinaryExpression(expression);
+    }
+    return compared;
+  }
 }

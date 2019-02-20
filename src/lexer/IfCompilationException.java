@@ -1,3 +1,5 @@
+package logoCompiler.lexer;
+
 public class IfCompilationException extends Exception {
 
   /**

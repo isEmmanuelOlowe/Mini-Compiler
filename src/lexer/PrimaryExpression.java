@@ -1,3 +1,7 @@
+package logoCompiler.lexer;
+
+import logoCompiler.parser.Parser;
+
 public final class PrimaryExpression extends Expression{
 
   //holds integer or variable
@@ -16,6 +20,6 @@ public final class PrimaryExpression extends Expression{
   * Adds the content of primary expression to the list of items that is required to be printed.
   */
   public void print() {
-    System.out.println(this.content);
+    Parser.add(this.content);
   }
 }

@@ -1,3 +1,5 @@
+package logoCompiler.parser;
+
 import java.util.HashMap;
 
 /**

@@ -1,12 +1,17 @@
+package logoCompiler.lexer;
+
 import java.lang.Exception;
 import java.util.ArrayList;
 
 public final class ErrorHandler {
 
-  private static ArrayList<String> errorsOccured = ArrayList<String>;
+  private static ArrayList<String> errorsOccured = new ArrayList<String>();
+  private static ArrayList<String> methodCalls = new ArrayList<String>();
+  private static ArrayList<String> methodDetails = new ArrayList<String>();
+  private static ArrayList<String> PROCNames = new ArrayList<String>();
   //The line number of the current line being read
   private static int currentLine = 0;
-  private static String curentString;
+  private static String currentString;
   /**
   * Adds an error which has occured to the list of errors
   *
@@ -14,26 +19,47 @@ public final class ErrorHandler {
   * @param line the code sumbitted to the compiler
   * @param ErrorMessage the errror message that was reported
   */
-  public static void addError(String ErrorMessage) {
-    String error = ErrorMessage " - LINE " + currentLine ": " + currentString;
-    ErrorsOccured.add(error);
+
+  public static void addName(String name){
+    PROCNames.add(name);
   }
 
+  public static void addError(String ErrorMessage) {
+    String error = ErrorMessage +  " - LINE " + currentLine + ": " + currentString;
+    errorsOccured.add(error);
+  }
+
+  public static void addMethodCall(String name){
+    methodCalls.add(name);
+    methodDetails.add("Line " + currentLine + ": " + currentString);
+  }
   /**
   * Reports in any errors occured during parsing.
   *
   * @return returns true if any errors did occur
   */
   public static boolean areErrors() {
-    if (errorsOccured.size() > 1) {
-      return true;
+    //check that methods have corresponding method calls
+    for (int i = 0; i < methodCalls.size(); i++) {
+      //import list of proc tokens from
+      //compare to declared methods
+      if(Tokeniser.isInList(methodCalls.get(i), (String[]) PROCNames.toArray()) == "none"){
+        errorsOccured.add("The method called: " + methodCalls.get(i) + "has not been declared" + methodDetails.get(i));
+      }
     }
+
+    //
+    boolean errors = false;
+    if (errorsOccured.size() > 1) {
+      errors = true;
+    }
+    return errors;
   }
 
   /**
   * Reports all the errors which were reported to user.
   */
-  public static void report Errors() {
+  public static void reportErrors() {
     for (String error: errorsOccured) {
       System.out.println(error);
     }
@@ -45,7 +71,7 @@ public final class ErrorHandler {
     currentString = line;
   }
 
-  public static void getCurrentLine() {
+  public static int getCurrentLine() {
     return currentLine;
   }
 

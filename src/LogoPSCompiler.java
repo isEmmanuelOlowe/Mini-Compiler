@@ -1,6 +1,7 @@
 package logoCompiler;
 
-import logoCompiler.lexer.Lexer;
+
+import logoCompiler.lexer.*;
 import logoCompiler.parser.*;
 
 /**
@@ -11,14 +12,15 @@ import logoCompiler.parser.*;
 public class LogoPSCompiler {
   public static void main(String[] args) {
 
-    String logFileName;
+    String logoFileName;
     String psFileName;
 
+    Lexer lexer = new Lexer();
     if (args.length == 1) {
-      logFileName = args[0];
+      logoFileName = args[0];
       psFileName = logoFileName.split("\\.")[0] + ".ps";
       //Tokenises The whole logo file
-      Parser.t = Lexer.lex(logoFileName);
+      Parser.t = lexer.lex(logoFileName);
       //checks if any errors occured in the parsing of the file.
       if (ErrorHandler.areErrors()) {
         //reports the errors occured to the user
@@ -26,11 +28,15 @@ public class LogoPSCompiler {
       }
       //add some way to parse the file
       //only parse the file if no errors have occured
-      else if(!Parser.error) {
+      else {
+        //adds the prologue to the top of commands to be written
         psPrologue();
-        Parser.codeGen(psFileName);
+        //adds only the methods in the PostScript file to be written
+        Parser.codeGen();
+        //adds the epilogue to the list of commands to be written
         psEpilogue();
-        Parser.printFinal();
+        //prints the ps to a file
+        Parser.printFinal(psFileName);
       }
     }
     else {
@@ -40,47 +46,47 @@ public class LogoPSCompiler {
   }
 
   public static void psPrologue() {
-	    parser.add("%!PS-Adobe-3.0");	// Adobe header
+	    Parser.add("%!PS-Adobe-3.0");	// Adobe header
 	    /* rest of prologue ... */
-	    parser.add("/Xpos    { 300 } def");
-	    parser.add("/Ypos    { 500 } def");
-	    parser.add("/Heading { 0   } def");
-	    parser.add("/Arg     { 0   } def");
+	    Parser.add("/Xpos    { 300 } def");
+	    Parser.add("/Ypos    { 500 } def");
+	    Parser.add("/Heading { 0   } def");
+	    Parser.add("/Arg     { 0   } def");
 	    //Implementation of Right, Left and Forward procedures in PostScript
-	    parser.add("/Right   {");
-	    parser.add("Heading exch add Trueheading");
-	    parser.add("/Heading exch def");
-	    parser.add("} def");
-	    parser.add("/Left {");
-	    parser.add("Heading exch sub Trueheading");
-	    parser.add("/Heading exch def");
-	    parser.add("} def");
-	    parser.add("/Trueheading {");
-	    parser.add("360 mod dup");
-	    parser.add("0 lt { 360 add } if");
-	    parser.add("} def");
-	    parser.add("/Forward {");
-	    parser.add("dup  Heading sin mul");
-	    parser.add("exch Heading cos mul");
-	    parser.add("2 copy Newposition");
-	    parser.add("rlineto");
-	    parser.add("} def");
-	    parser.add("/Newposition {");
-	    parser.add("Heading 180 gt Heading 360 lt");
-	    parser.add("and { neg } if exch");
-	    parser.add("Heading  90 gt Heading 270 lt");
-	    parser.add("and { neg } if exch");
-	    parser.add("Ypos add /Ypos exch def");
-	    parser.add("Xpos add /Xpos exch def");
-	    parser.add("} def");
+	    Parser.add("/Right   {");
+	    Parser.add("Heading exch add Trueheading");
+	    Parser.add("/Heading exch def");
+	    Parser.add("} def");
+	    Parser.add("/Left {");
+	    Parser.add("Heading exch sub Trueheading");
+	    Parser.add("/Heading exch def");
+	    Parser.add("} def");
+	    Parser.add("/Trueheading {");
+	    Parser.add("360 mod dup");
+	    Parser.add("0 lt { 360 add } if");
+	    Parser.add("} def");
+	    Parser.add("/Forward {");
+	    Parser.add("dup  Heading sin mul");
+	    Parser.add("exch Heading cos mul");
+	    Parser.add("2 copy Newposition");
+	    Parser.add("rlineto");
+	    Parser.add("} def");
+	    Parser.add("/Newposition {");
+	    Parser.add("Heading 180 gt Heading 360 lt");
+	    Parser.add("and { neg } if exch");
+	    Parser.add("Heading  90 gt Heading 270 lt");
+	    Parser.add("and { neg } if exch");
+	    Parser.add("Ypos add /Ypos exch def");
+	    Parser.add("Xpos add /Xpos exch def");
+	    Parser.add("} def");
 	  }
 
 	  public static void psEpilogue() {
 	    /* epilogue ... */
-	    parser.add("Xpos Ypos moveto");
+	    Parser.add("Xpos Ypos moveto");
 	    //Call Main to start
-	    parser.add("MAIN");
-	    parser.add("stroke");
-	    parser.add("showpage");
+	    Parser.add("MAIN");
+	    Parser.add("stroke");
+	    Parser.add("showpage");
 	  }
 }
