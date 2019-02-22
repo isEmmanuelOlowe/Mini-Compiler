@@ -43,7 +43,6 @@ public final class StatementToken extends Token {
 
   public void printToken() {
     parameter.print();
-    Parser.add("/Arg exch def");
     //call procedure
     Parser.add(typeMove);
   }
