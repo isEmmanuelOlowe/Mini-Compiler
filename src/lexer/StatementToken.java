@@ -50,8 +50,11 @@ public final class StatementToken extends Token {
   private Expression addExpression(String[] expression) {
     Expression compared;
     //if expression only contains one element it must be primary statement
-    if (expression.length == 1 || expression.length == 3) {
+    if (expression.length == 1) {
       compared = new PrimaryExpression(expression[0]);
+    }
+    else if(expression.length == 3 && expression[0].equals("(") && expression[2].equals(")")) {
+      compared = new PrimaryExpression(expression[1]);
     }
     else {
       compared = new BinaryExpression(expression);
