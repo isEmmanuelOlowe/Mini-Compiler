@@ -1,6 +1,6 @@
-package logoCompiler.lexer;
+package lexer;
 
-import logoCompiler.parser.Parser;
+import parser.Parser;
 import java.util.Arrays;
 
 public final class StatementToken extends Token {
@@ -19,13 +19,16 @@ public final class StatementToken extends Token {
   public boolean isValidStatement(String[] line) {
 
     boolean valid = false;
-    if (Tokeniser.isMove(line[0])) {
+    if (line.length <= 1){
+      valid = false;
+    }
+    else if (Tokeniser.isMove(line[0])) {
       if (Tokeniser.validCalculation(Arrays.copyOfRange(line, 1, line.length))) {
         valid = true;
       }
     }
     else {
-      if (line[2].equals("(") && line[line.length - 1].equals(")")) {
+      if (line[1].equals("(") && line[line.length - 1].equals(")")) {
         if (Tokeniser.validCalculation(Arrays.copyOfRange(line, 1, line.length))) {
           ErrorHandler.addMethodCall(line[0]);
           valid = true;
@@ -39,7 +42,8 @@ public final class StatementToken extends Token {
   }
 
   public void printToken() {
-    Parser.add(parameter + " exch def");
+    parameter.print();
+    Parser.add("/Arg exch def");
     //call procedure
     Parser.add(typeMove);
   }
@@ -47,7 +51,7 @@ public final class StatementToken extends Token {
   private Expression addExpression(String[] expression) {
     Expression compared;
     //if expression only contains one element it must be primary statement
-    if (expression.length == 1){
+    if (expression.length == 1 || expression.length == 3) {
       compared = new PrimaryExpression(expression[0]);
     }
     else {

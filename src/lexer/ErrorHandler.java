@@ -1,4 +1,4 @@
-package logoCompiler.lexer;
+package lexer;
 
 import java.lang.Exception;
 import java.util.ArrayList;
@@ -43,8 +43,10 @@ public final class ErrorHandler {
     for (int i = 0; i < methodCalls.size(); i++) {
       //import list of proc tokens from
       //compare to declared methods
-      if(Tokeniser.isInList(methodCalls.get(i), (String[]) PROCNames.toArray()) == "none"){
-        errorsOccured.add("The method called: " + methodCalls.get(i) + "has not been declared" + methodDetails.get(i));
+      String[] sPROCNames = new String [PROCNames.size()];
+      sPROCNames = PROCNames.toArray(sPROCNames);
+      if (Tokeniser.isInList(methodCalls.get(i), sPROCNames).equals("none")) {
+        errorsOccured.add("The method called: " + methodCalls.get(i) + " has not been declared " + methodDetails.get(i));
       }
     }
 

@@ -1,4 +1,4 @@
-package logoCompiler.parser;
+package parser;
 
 import java.util.HashMap;
 

@@ -1,6 +1,6 @@
-package logoCompiler.lexer;
+package lexer;
 
-import logoCompiler.parser.Parser;
+import parser.Parser;
 
 public final class PrimaryExpression extends Expression{
 

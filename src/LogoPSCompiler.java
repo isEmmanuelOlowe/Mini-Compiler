@@ -1,8 +1,5 @@
-package logoCompiler;
-
-
-import logoCompiler.lexer.*;
-import logoCompiler.parser.*;
+import lexer.*;
+import parser.*;
 
 /**
 * The main class of the compiler program, will execute high level instructions.

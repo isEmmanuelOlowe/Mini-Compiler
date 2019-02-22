@@ -1,6 +1,7 @@
-package logoCompiler.lexer;
+package lexer;
 
-import logoCompiler.parser.Parser;
+import parser.Parser;
+import parser.PSDictionary;
 import parser.PSDictionary;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -32,8 +33,6 @@ public final class IfToken extends Token {
       //last index is ignored since it equals "THEN"
       String[] sCompared2 = Arrays.copyOfRange(line, operatorIndex + 1, line.length - 1);
       this.compared2 = addExpression(sCompared2);
-      this.isMetComplete = false;
-      this.isFailedComplete = false;
     }
   }
 
@@ -65,7 +64,7 @@ public final class IfToken extends Token {
   //finds the location of a comparison operator in string array
   private int findComparison(String[] line) {
     //will store index of comparison operator
-    int index;
+    int index = -1;
     for (int i = 0; i < line.length; i++) {
       if (Tokeniser.isComparisonOperator(line[i])) {
         index = i;
@@ -73,6 +72,7 @@ public final class IfToken extends Token {
     }
     return index;
   }
+
   private void isElseFound() {
     if(!isMetComplete) {
       ErrorHandler.addError("IF Statements Must contain ELSE command");
@@ -107,8 +107,8 @@ public final class IfToken extends Token {
       }
       this.isMetComplete = true;
     }
-    else if (line[0].equals("END") && line[1].equals("IF")){
-      if (line.length != 2) {
+    else if (line[0].equals("ENDIF")){
+      if (line.length != 1) {
         ErrorHandler.addError("Unexpected Tokens");
       }
       isElseFound();
@@ -125,11 +125,13 @@ public final class IfToken extends Token {
 
   //checks the last if statement is complete
   private boolean lastIfCompleted(ArrayList<Token> statements) {
-    boolean complete = false;
-    if(statements.get(statements.size() - 1) instanceof IfToken){
-      IfToken lastIf = (IfToken) statements.get(statements.size() - 1);
-      if(lastIf.isComplete() == true){
-        complete = false;
+    boolean complete = true;
+    if(statements.size() >= 1){
+      if(statements.get(statements.size() - 1) instanceof IfToken){
+        IfToken lastIf = (IfToken) statements.get(statements.size() - 1);
+        if(!lastIf.isComplete()){
+          complete = false;
+        }
       }
     }
     return complete;
@@ -148,7 +150,7 @@ public final class IfToken extends Token {
   private Expression addExpression(String[] expression){
     Expression compared;
     //if expression only contains one element it must be primary statement
-    if (expression.length == 1){
+    if (expression.length == 1 || expression.length == 3) {
       compared = new PrimaryExpression(expression[0]);
     }
     else {

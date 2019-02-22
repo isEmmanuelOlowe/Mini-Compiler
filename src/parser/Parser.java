@@ -1,4 +1,4 @@
-package logoCompiler.parser;
+package parser;
 
 import lexer.*;
 import java.util.ArrayList;
@@ -44,6 +44,7 @@ public final class Parser {
       for (String line: lines) {
         writer.println(line);
       }
+      writer.close();
     }
     catch (IOException ex) {
       System.out.println("Error Occured: " + ex.getMessage());

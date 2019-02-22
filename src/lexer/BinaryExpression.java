@@ -1,7 +1,7 @@
-package logoCompiler.lexer;
+package lexer;
 
 import java.util.Arrays;
-import logoCompiler.parser.Parser;
+import parser.Parser;
 import parser.PSDictionary;
 /**
 * Turns string calculations into binary expressions.

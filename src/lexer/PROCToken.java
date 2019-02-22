@@ -1,12 +1,13 @@
-package logoCompiler.lexer;
+package lexer;
 
 import java.util.ArrayList;
-import logoCompiler.parser.Parser;
+import parser.Parser;
 
 public final class PROCToken extends Token {
 
   private String name;
   private String parameter;
+  private boolean userDefined;
   private ArrayList<Token> statements = new ArrayList<Token>();
   //private ArrayList<String> methods = new ArrayList<String>();
   //for in the event the class is dumb InvalidToken
@@ -57,27 +58,7 @@ public final class PROCToken extends Token {
 
   //checks identifiers are valid
   private static boolean checkIdentifier(String ident) {
-    boolean valid = true;
-    //checks identifier is not a keyword
-    if(!Tokeniser.isKeyword(ident).equals("none")){
-      ErrorHandler.addError("Identifier cannot be keyword");
-      valid = false;
-    }
-
-    //checks is not a isComparisonOperator
-    if(!Tokeniser.isComparisonOperator(ident)){
-      ErrorHandler.addError("Identifier cannot be Comparison Operator");
-      valid = false;
-    }
-
-    //checks is not a math operator
-    if(!Tokeniser.isMathOperator(ident)){
-      ErrorHandler.addError("Identifier cannot be Mathematical Operator");
-      valid = false;
-    }
-    //check not special character
-    //check doesnt contain specical characters
-
+    boolean valid = ident.matches("[a-zA-Z]+");
     return valid;
   }
 
@@ -113,20 +94,22 @@ public final class PROCToken extends Token {
       }
     }
     //checks the proc method is the correct length
-    if (line.length != 6) {
+    if (line.length != 5) {
       ErrorHandler.addError("Unexpected Tokens");
       valid = false;
     }
-    return false;
+    return valid;
   }
 
   //checks the last if statement is complete
   private boolean lastIfCompleted() {
-    boolean complete = false;
-    if(this.statements.get(this.statements.size() - 1) instanceof IfToken){
-      IfToken lastIf = (IfToken) this.statements.get(this.statements.size() - 1);
-      if(lastIf.isComplete() == true){
-        complete = false;
+    boolean complete = true;
+    if(this.statements.size() >= 1){
+      if(this.statements.get(this.statements.size() - 1) instanceof IfToken){
+        IfToken lastIf = (IfToken) this.statements.get(this.statements.size() - 1);
+        if(!lastIf.isComplete()){
+          complete = false;
+        }
       }
     }
     return complete;
@@ -140,6 +123,7 @@ public final class PROCToken extends Token {
 
   public void printToken(){
       Parser.add("/" + name + " {" );
+      Parser.add("/" + this.parameter + " exch def");
       //insert method to declare paraameter in method
       for (Token token: statements){
         token.printToken();

@@ -1,4 +1,4 @@
-package logoCompiler.lexer;
+package lexer;
 
 public class ProcCompilationErrorException extends Exception {
 

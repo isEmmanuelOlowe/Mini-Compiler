@@ -1,4 +1,4 @@
-package logoCompiler.lexer;
+package lexer;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -47,7 +47,7 @@ public class Tokeniser {
   }
 
   public static boolean isMove(String word) {
-    boolean hasMoveKeyword = (isInList(word, Arrays.copyOfRange(keywords, 5 ,7))) == "none"? true: false;
+    boolean hasMoveKeyword = (isInList(word, Arrays.copyOfRange(keywords, 5 ,8))).equals("none")? false: true;
     return hasMoveKeyword;
   }
 
@@ -73,12 +73,12 @@ public class Tokeniser {
 
 
   public static boolean isComparisonOperator(String word) {
-    boolean isOperand = isInList(word, comparisonOperators) != "none"? true: false;
+    boolean isOperand = isInList(word, comparisonOperators).equals("none")? false: true;
     return isOperand;
   }
 
   public static boolean isMathOperator(String word) {
-    boolean isOperand = isInList(word, operators) != "none"? true: false;
+    boolean isOperand = isInList(word, operators).equals("none")? false: true;
     return isOperand;
   }
 
