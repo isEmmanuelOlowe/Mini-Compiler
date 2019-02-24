@@ -12,6 +12,7 @@ public final class PSDictionary {
   * setups HashMap with corresponding values
   */
   public static void setup() {
+
     operator.put("+", "add");
     operator.put("-", "sub");
     operator.put("*", "mul");
@@ -31,6 +32,7 @@ public final class PSDictionary {
   * @return the corresponding operator in post script
   */
   public static String convertToPSOperator(String logoOperator) {
+    
     String psOperator = operator.get(logoOperator);
     return psOperator;
   }

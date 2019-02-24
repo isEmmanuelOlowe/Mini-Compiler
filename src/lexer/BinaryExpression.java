@@ -3,6 +3,7 @@ package lexer;
 import java.util.Arrays;
 import parser.Parser;
 import parser.PSDictionary;
+
 /**
 * Turns string calculations into binary expressions.
 */
@@ -15,7 +16,13 @@ public final class BinaryExpression extends Expression {
   //The expression right of operator
   private Expression comparedRight;
 
+  /**
+  * Converts calcualtion to Binary Expression Tree.
+  *
+  * @param line the line of calculation.
+  */
   public BinaryExpression(String line[]) {
+
     /*
     * conditions[0] returns the index location of operator.
     * conditions[1] returns the depth of mathematical statment in brackets so they
@@ -38,6 +45,7 @@ public final class BinaryExpression extends Expression {
   * returns expression in a stack based order using recursion.
   */
   public void print() {
+
     //adds both left and right expression to list of items that needs to be printed
     comparedLeft.print();
     comparedRight.print();
@@ -46,9 +54,13 @@ public final class BinaryExpression extends Expression {
   }
 
   /**
-  * Gets the index and depth of operator in mathematical statement
+  * Gets the index and depth of operator in mathematical statement.
+  *
+  * @param line the split line of calculation
+  * @return the location of operator and its depth in brackets.
   */
   private int[] findOperator(String line[]) {
+
     boolean found = false;
     int index = 0;
     //give a default value to lowest
@@ -97,9 +109,13 @@ public final class BinaryExpression extends Expression {
   }
 
   /**
-  * determines which two operators have the lowest precedence
+  * determines which two operators have the lowest precedence.
+  *
+  * @param currentLow the current lowest precedence operator.
+  * @param operator the operator being compared.
+  * @return returns true if the operator being compared is lower than the lowest.
   */
-  private boolean lowest(String currentLow, String operator){
+  private boolean lowest(String currentLow, String operator) {
 
     boolean newLow = false;
     if (precedence(currentLow) > precedence(operator)) {
@@ -109,12 +125,16 @@ public final class BinaryExpression extends Expression {
   }
 
   /**
-  * creates new expressions dependent on their length
+  * creates new expressions dependent on their length.
+  *
+  * @param expression the string calculation segement being converted to an expression.
+  * @return Expression object which has been created.
   */
   private static Expression newExpression(String[] expression) {
+
     Expression compared;
     //if expression only contains one element it must be primary statement
-    if (expression.length == 1){
+    if (expression.length == 1) {
       compared = new PrimaryExpression(expression[0]);
     }
     else {
@@ -124,9 +144,13 @@ public final class BinaryExpression extends Expression {
   }
 
   /**
-  *give operators precedence a numerical values
+  * give operators precedence a numerical values.
+  *
+  * @param operator the operator being assigned a value.
+  * @return numberal value fo precedence.
   */
   private static int precedence(String operator) {
+
     int value;
     if (operator.equals("+")) {
       value = 1;

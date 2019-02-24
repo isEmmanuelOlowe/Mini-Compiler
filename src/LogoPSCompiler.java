@@ -13,7 +13,9 @@ public class LogoPSCompiler {
     String psFileName;
 
     Lexer lexer = new Lexer();
+
     if (args.length == 1) {
+      
       logoFileName = args[0];
       psFileName = logoFileName.split("\\.")[0] + ".ps";
       //Tokenises The whole logo file

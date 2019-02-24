@@ -5,6 +5,7 @@ import parser.PSDictionary;
 import parser.PSDictionary;
 import java.util.Arrays;
 import java.util.ArrayList;
+
 /**
 * Tokenised form of IfStatements in Logo
 */
@@ -18,7 +19,7 @@ public final class IfToken extends Token {
   private ArrayList<Token> conditionFailed = new ArrayList<Token>();
 
   /**
-  *
+  * Converts a line to If statement token.
   *
   * @param line the current line being processed
   */
@@ -29,15 +30,21 @@ public final class IfToken extends Token {
       this.operator = line[operatorIndex];
       //first index is ignored since it equals "IF"
       String[] sCompared1 = Arrays.copyOfRange(line, 1, operatorIndex);
-      this.compared1 = addExpression(sCompared1);
+      this.compared1 = Tokeniser.addExpression(sCompared1);
       //last index is ignored since it equals "THEN"
       String[] sCompared2 = Arrays.copyOfRange(line, operatorIndex + 1, line.length - 1);
-      this.compared2 = addExpression(sCompared2);
+      this.compared2 = Tokeniser.addExpression(sCompared2);
     }
   }
 
-  //determines if an if statement is valid
+  /**
+  * Determines if an IF statement is valid.
+  *
+  * @param line the line of file being tokenised.
+  * @return true if the if statement is valid.
+  */
   private boolean isValidIf(String[] line) {
+
     boolean valid = true;
     //First index must be if to enter this proc so it doesnt need to be verified
     if(line[line.length - 1].equals("THEN")) {
@@ -61,8 +68,14 @@ public final class IfToken extends Token {
     return valid;
   }
 
-  //finds the location of a comparison operator in string array
+  /**
+  * Finding the comparison operator in the line of code being tokenised.
+  *
+  * @param line the line of code being tokenised.
+  * @return the index of the comparison operator
+  */
   private int findComparison(String[] line) {
+
     //will store index of comparison operator
     int index = -1;
     for (int i = 0; i < line.length; i++) {
@@ -73,13 +86,22 @@ public final class IfToken extends Token {
     return index;
   }
 
+  /**
+  * Determines if else statement has been called before if statement is ended.
+  */
   private void isElseFound() {
+    
     if(!isMetComplete) {
       ErrorHandler.addError("IF Statements Must contain ELSE command");
     }
     this.isFailedComplete = true;
   }
-  //adds statements to the if token
+
+  /**
+  * Adds statements to the If token.
+  *
+  * @param line the line of code being read.
+  */
   public void addStatement(String line[]) {
     //checks which part of the if statement they shall be declared to
     if(!isMetComplete) {
@@ -92,6 +114,9 @@ public final class IfToken extends Token {
 
   /**
   * Adds a new statement to a list of statements
+  *
+  * @param line the line of code being tokenised
+  * @param statements the statement set that the new tokenised statement is being added to.
   */
   private void newStatement(String line[], ArrayList<Token> statements) {
 
@@ -123,8 +148,14 @@ public final class IfToken extends Token {
     }
   }
 
-  //checks the last if statement is complete
+  /**
+  * Determines if last if statement within if token was completed.
+  *
+  * @param statements the statement list that is being checked for if statements.
+  * @return if the last IfStatements is the list statements was completed.
+  */
   private boolean lastIfCompleted(ArrayList<Token> statements) {
+
     boolean complete = true;
     if(statements.size() >= 1){
       if(statements.get(statements.size() - 1) instanceof IfToken){
@@ -137,29 +168,29 @@ public final class IfToken extends Token {
     return complete;
   }
 
-  //determines if an if statement has been completed
+  /**
+  * Whether last statement in if token was completed.
+  *
+  * @return true if last if statement was completed.
+  */
   public boolean isComplete(){
+
     return isFailedComplete;
   }
 
-  //in the event an error occurs in the compilation of the if statement
+  /**
+  * in the event an error occurs in the compilation of the if statement.
+  */
   public void invalid(){
+
     isFailedComplete = true;
   }
 
-  private Expression addExpression(String[] expression){
-    Expression compared;
-    //if expression only contains one element it must be primary statement
-    if (expression.length == 1 || expression.length == 3) {
-      compared = new PrimaryExpression(expression[0]);
-    }
-    else {
-      compared = new BinaryExpression(expression);
-    }
-    return compared;
-  }
-
+  /**
+  * Adds the to PostScript form to list of items that are require to be printed.
+  */
   public void printToken(){
+
     this.compared1.print();
     this.compared2.print();
     Parser.add(PSDictionary.convertToPSOperator(this.operator));

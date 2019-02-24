@@ -3,20 +3,36 @@ package lexer;
 import parser.Parser;
 import java.util.Arrays;
 
+/**
+* Describes Statement Token
+*/
 public final class StatementToken extends Token {
 
   //typeMove (Name of method being called)
-  private String typeMove;
+  private String name;
   private Expression parameter;
 
+
+  /**
+  * Tokenises a Statement
+  *
+  * @param line the line of code being tokenised to statement.
+  */
   public StatementToken(String[] line) {
+
     if (isValidStatement(line)){
-      this.typeMove = line[0];
-      this.parameter = addExpression(Arrays.copyOfRange(line, 1, line.length));
+      this.name = line[0];
+      this.parameter = Tokeniser.addExpression(Arrays.copyOfRange(line, 1, line.length));
     }
   }
 
-  public boolean isValidStatement(String[] line) {
+  /**
+  * Determines if a statement is in a valid.
+  *
+  * @param line the line of code being tokenised
+  * @return true if statement is in valid format.
+  */
+  private boolean isValidStatement(String[] line) {
 
     boolean valid = false;
     if (line.length <= 1){
@@ -41,24 +57,13 @@ public final class StatementToken extends Token {
     return valid;
   }
 
+  /**
+  * Converts a Token to PostScript format.
+  */
   public void printToken() {
+
     parameter.print();
     //call procedure
-    Parser.add(typeMove);
-  }
-
-  private Expression addExpression(String[] expression) {
-    Expression compared;
-    //if expression only contains one element it must be primary statement
-    if (expression.length == 1) {
-      compared = new PrimaryExpression(expression[0]);
-    }
-    else if(expression.length == 3 && expression[0].equals("(") && expression[2].equals(")")) {
-      compared = new PrimaryExpression(expression[1]);
-    }
-    else {
-      compared = new BinaryExpression(expression);
-    }
-    return compared;
+    Parser.add(valid);
   }
 }

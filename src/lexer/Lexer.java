@@ -7,9 +7,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
 
+/**
+* Tokenises each line of the file.
+*/
 public final class Lexer {
 
   private static ArrayList<PROCToken> procTokens = new ArrayList<PROCToken>();
+
   /**
   * Tokenisers the logo file.
   *
@@ -19,11 +23,11 @@ public final class Lexer {
   public ArrayList<PROCToken> lex(String logoFile) {
 
     //stores the proc Tokens
-    try{
+    try {
       //For reading the file
       BufferedReader logoBReader = new BufferedReader(new FileReader(logoFile));
       String line;
-      while((line = logoBReader.readLine()) != null){
+      while ((line = logoBReader.readLine()) != null) {
         process(line);
     //Error catching for file
       }
@@ -37,12 +41,20 @@ public final class Lexer {
     return procTokens;
   }
 
-  public  void process(String sLine) {
+  /**
+  * Processes the current line being read.
+  *
+  * @param sLine the string of the current line being read.
+  */
+  private void process(String sLine) {
+
     //cheks line is no empty
     if ((!sLine.isEmpty() && !sLine.trim().equals("") && !sLine.trim().equals("\n"))) {
       ErrorHandler.addString(sLine);
+      //makes everything uppercase since LOGO is not case sensitive
+      String upper = sLine.toUpperCase();
       //makes sure there is space between brackets and splits by white space
-      String[] line = sLine.replace("(", " ( ").replace(")", " ) ").replace("\t", "").trim().split("\\s+");
+      String[] line = upper.replace("(", " ( ").replace(")", " ) ").replace("\t", "").trim().split("\\s+");
       //All logo code must run in method so if first word must PROC be PROC
       if (ErrorHandler.getCurrentLine() == 1) {
         procTokens.add(new PROCToken(line));
