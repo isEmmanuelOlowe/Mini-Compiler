@@ -64,6 +64,6 @@ public final class StatementToken extends Token {
 
     parameter.print();
     //call procedure
-    Parser.add(valid);
+    Parser.add(name);
   }
 }
