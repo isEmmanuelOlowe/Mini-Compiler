@@ -64,7 +64,57 @@ It was determined
 
 ## Testing
 
+### Test Case 1:
+
+The first test was used to ensure that the Mini-Compiler program successfully converts Logo code into a valid post script file. In this case we used the `dragon.ps` file. 
+
+#### Expected Output
+
+We expected a valid `.ps` file to be produced. When opened in a text editor it valid post script code should be shown. When opened in a file viewer a picture that represents a 'dragon' should be visible. 
+
+#### Actual Output
+
+![](testing/test case 1/Test Case 1.png)
+
+![](testing/test case 1/Test Case 1 - Picture.png)
+
+As you can see from the above outputs, the program successfully produces a valid post script file and thus a picture/fractal of, in this case, a 'dragon'.
+
+### Test Case 2:
+
+This test was used to ensure that the Mini-Compiler could 'handle' Logo code if it was presented in a single line. 
+
+ #### Expected 
+
+The program should produce a valid `.ps` file and thus a picture/fractal of a dragon. 
+
+#### Actual
+
+![](testing/test case 2/Test Case 2 - Code.png)
+
+![](/cs/home/gs221/Documents/Semester-2/CS1006/Mini-Compiler/testing/test case 2/Test Case 2 - Picture.png)
+
+The program successfully produces a valid `.ps` file and, in this case, a picture/fractal of a 'dragon'
+
+### Test Case 3: 
+
+This test case was used to ensure that the Mini-Compiler program handles errors, produces useful error information, including line numbers, 'recovers' from this error and continues to try and compile the rest of the program, providing further error information if applicable. 
+
+#### Expected
+
+The program should show multiple errors and their relevant information. For each error the following information should be shown: Description of the error, the line number where the error occurs and a 'copy' of the section around the error. 
+
+#### Actual 
+
+![](/cs/home/gs221/Documents/Semester-2/CS1006/Mini-Compiler/testing/test case 3/Test Case 3 - Code.png)
+
+The program successfully displays errors and their relevant information as described above.  
+
+
+
 ## Evaluation
+
+The specification required that a 'Mini-Compiler' be produced that translates LOGO to PostScript by use of provided starter code. Our solution successfully converts the given LOGO files to PostScript. 
 
 ## Conclusion
 
