@@ -157,16 +157,11 @@ public final class PROCToken extends Token {
   public void printToken() {
 
       Parser.add("/" + name + " {");
-      if (!this.name.equals("MAIN")) {
-        Parser.add("1 dict begin");
-        Parser.add("/" + this.parameter + " exch def");
-      }
       //insert method to declare paraameter in method
       for (Token token: statements) {
         token.printToken();
       }
       if (!this.name.equals("MAIN")) {
-        Parser.add("end");
       }
       Parser.add("} def");
   }

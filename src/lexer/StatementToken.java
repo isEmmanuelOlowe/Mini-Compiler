@@ -11,7 +11,7 @@ public final class StatementToken extends Token {
   //typeMove (Name of method being called)
   private String name;
   private Expression parameter;
-
+  private boolean isMove = false;
 
   /**
   * Tokenises a Statement
@@ -40,6 +40,7 @@ public final class StatementToken extends Token {
     }
     else if (Tokeniser.isMove(line[0])) {
       if (Tokeniser.validCalculation(Arrays.copyOfRange(line, 1, line.length))) {
+        isMove = true;
         valid = true;
       }
     }
@@ -61,9 +62,18 @@ public final class StatementToken extends Token {
   * Converts a Token to PostScript format.
   */
   public void printToken() {
-
+    //If a function is called then some must be on stack to set the value of Arg to
+    if (!isMove){
+      Parser.add("Arg");
+    }
     parameter.print();
-    //call procedure
+    if (!isMove) {
+      Parser.add("/Arg exch def");
+    }
     Parser.add(name);
+    //call procedure
+    if (!isMove) {
+      Parser.add("/Arg exch def");
+    }
   }
 }
