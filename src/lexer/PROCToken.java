@@ -67,7 +67,7 @@ public final class PROCToken extends Token {
   */
   private static boolean checkIdentifier(String ident) {
     //checks first character is in set of letters and following can be numbers and letters
-    boolean valid = matches("[a-zA-Z][\\w]*");
+    boolean valid = ident.matches("[a-zA-Z][\\w]*");
     ErrorHandler.addError("The identifier '" + ident + "' does not follow Logo Grammar Naming Conventions.");
     return valid;
   }

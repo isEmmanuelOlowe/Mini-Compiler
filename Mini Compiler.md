@@ -44,7 +44,7 @@ The steam of `PostScript` commands are printed to a `.ps` file with same name as
 
 ### Lexer
 
-![](/cs/home/eo32/Documents/CS1006/Mini-Compiler/uml/Mini-Compiler-Lexer-Class-Diagrams.png)
+![](uml/Mini-Compiler-Lexer-Class-Diagrams.png)
 
 The following responsibilities:
 
@@ -60,7 +60,7 @@ It was determined
 
 ### Parser
 
-![](/cs/home/eo32/Documents/CS1006/Mini-Compiler/uml/Mini-Compiler-Parser-Class-Diagrams.png)
+![](uml/Mini-Compiler-Parser-Class-Diagrams.png)
 
 ## Testing
 

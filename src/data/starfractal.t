@@ -1,0 +1,21 @@
+
+	PROC LSTARFRACTAL ( LEVEL )
+	    IF LEVEL != 0 THEN
+		FORWARD LEVEL
+		RSTARFRACTAL ( LEVEL - 2 )
+	    ELSE
+		FORWARD 0
+	    ENDIF	
+
+	PROC RSTARFRACTAL ( LEVEL )
+	    IF LEVEL != 0 THEN
+                RIGHT 145
+		FORWARD LEVEL
+		LSTARFRACTAL ( LEVEL - 2 )
+            ELSE       
+                FORWARD 0      
+            ENDIF 	
+
+	PROC MAIN (VOID)
+	   LEFT 90
+	   LSTARFRACTAL  ( 250 )
