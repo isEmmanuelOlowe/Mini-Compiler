@@ -8,7 +8,7 @@ The specification required that a program be produced which is able to turn Logo
 
 Here are rules that were extrapolated from the provided Logo Grammar and examples of Logo Code.
 
-1. Indentation does not determine the precedence of a statement. This was extrapolated from `spiral.t`. So when parsing file indentation can be ignored, as it purposes are for convention only.
+1. Indentation is not important in the Logo language. This was extrapolated from `spiral.t`. So when parsing file indentation can be ignored, as it purposes are for convention only.
 2. All commands must be separated by new lines.
 3. All code in Logo language is ran inside of a `PROC` method. So the first word in any logo file must then be  `PROC`.
 4. Parameters are always in circular brackets when declaring method and calling method in statement.
@@ -28,7 +28,7 @@ The functionally In which the program requires has been split in to 3 separate s
 
 #### Lexical Analysis
 
-Converts the Logo code to steam of `PROC` tokens. The `PROC` tokens contain the code which runs  the method with it. Each type of logo command shall be made into a type of `Token`.
+Converts the Logo code to stream of `PROC` tokens. The `PROC` tokens contain the code which runs  the method with it. Each type of logo command shall be made into a type of `Token`. This section of code shall also be responsible for the checking for that the logo file has the correct syntax as well. The lexer shall also be able to parse a logo file in which all the commands have not been separated by new lines.
 
 #### Parsing
 
@@ -40,7 +40,27 @@ The steam of `PostScript` commands are printed to a `.ps` file with same name as
 
 ## Design
 
+[Justification for design decisions].
 
+### Lexer
+
+![](/cs/home/eo32/Documents/CS1006/Mini-Compiler/uml/Mini-Compiler-Lexer-Class-Diagrams.png)
+
+The following responsibilities:
+
+* Syntax Checking.
+* Determining If  `If statements` have been closed.
+* identifier format checking.
+* Check identifiers being used have been declared.
+* `Tokenisation` of line.
+* Binary Expression Tree Implementation.
+* Determining if calculations are in the correct format.
+
+It was determined
+
+### Parser
+
+![](/cs/home/eo32/Documents/CS1006/Mini-Compiler/uml/Mini-Compiler-Parser-Class-Diagrams.png)
 
 ## Testing
 

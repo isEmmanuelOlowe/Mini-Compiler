@@ -14,12 +14,15 @@ public class LogoPSCompiler {
 
     Lexer lexer = new Lexer();
 
-    if (args.length == 1) {
-      
+    if (args.length >= 1) {
+      boolean seperated = true;
       logoFileName = args[0];
+      if (args.length == 2 && args[1].equals("-n")){
+        seperated = false;
+      }
       psFileName = logoFileName.split("\\.")[0] + ".ps";
       //Tokenises The whole logo file
-      Parser.t = lexer.lex(logoFileName);
+      Parser.t = lexer.lex(logoFileName, seperated);
       //checks if any errors occured in the parsing of the file.
       if (ErrorHandler.areErrors()) {
         //reports the errors occured to the user
@@ -40,7 +43,7 @@ public class LogoPSCompiler {
     }
     else {
       //USAGE Information for program
-      System.out.println("USAGE: java LogoPSCompiler <logo_file>");
+      System.out.println("USAGE: java LogoPSCompiler <logo_file> [-n](- if commands are seperated by new lines)");
     }
   }
 

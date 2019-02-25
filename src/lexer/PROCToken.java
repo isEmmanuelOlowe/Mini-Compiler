@@ -66,6 +66,7 @@ public final class PROCToken extends Token {
   * @return true if identifier is valid.
   */
   private static boolean checkIdentifier(String ident) {
+
     boolean valid = false;
     //logo only supports consistent casing of letters
     if (ident.matches("[a-z]+") || ident.matches("[A-Z]+")) {

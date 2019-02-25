@@ -64,7 +64,8 @@ public final class ErrorHandler {
       }
     }
     boolean errors = false;
-    if (errorsOccured.size() > 1) {
+    //checks no errors have occured.
+    if (errorsOccured.size() >= 1) {
       errors = true;
     }
     return errors;
@@ -74,7 +75,7 @@ public final class ErrorHandler {
   * Reports all the errors which were reported to user.
   */
   public static void reportErrors() {
-    
+
     for (String error: errorsOccured) {
       System.out.println(error);
     }

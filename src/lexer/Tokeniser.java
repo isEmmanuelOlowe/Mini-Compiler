@@ -199,7 +199,7 @@ public class Tokeniser {
   * @return Expression
   */
   public static Expression addExpression(String[] expression) {
-    
+
     Expression compared;
     //if expression only contains one element it must be primary statement
     if (expression.length == 1) {
