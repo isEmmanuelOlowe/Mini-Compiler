@@ -55,11 +55,11 @@ public class LogoPSCompiler {
     Parser.add("/Heading { 0   } def");
     Parser.add("/Arg     { 0   } def");
     //Implementation of Right, Left and Forward procedures in PostScript
-    Parser.add("/RIGHT   {");
+    Parser.add("/Right   {");
     Parser.add("Heading exch add Trueheading");
     Parser.add("/Heading exch def");
     Parser.add("} def");
-    Parser.add("/LEFT {");
+    Parser.add("/Left {");
     Parser.add("Heading exch sub Trueheading");
     Parser.add("/Heading exch def");
     Parser.add("} def");
@@ -67,7 +67,7 @@ public class LogoPSCompiler {
     Parser.add("360 mod dup");
     Parser.add("0 lt { 360 add } if");
     Parser.add("} def");
-    Parser.add("/FORWARD {");
+    Parser.add("/Forward {");
     Parser.add("dup  Heading sin mul");
     Parser.add("exch Heading cos mul");
     Parser.add("2 copy Newposition");

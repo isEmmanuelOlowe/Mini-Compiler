@@ -63,17 +63,16 @@ public final class StatementToken extends Token {
   */
   public void printToken() {
     //If a function is called then some must be on stack to set the value of Arg to
-    if (!isMove){
+    if (isMove){
+      parameter.print();
+      Parser.add(name.substring(0, 1) + name.substring(1, name.length()).toLowerCase());
+    } else {
       Parser.add("Arg");
-    }
-    parameter.print();
-    if (!isMove) {
+      parameter.print();
       Parser.add("/Arg exch def");
-    }
-    Parser.add(name);
-    //call procedure
-    if (!isMove) {
+      Parser.add(name);
       Parser.add("/Arg exch def");
+
     }
   }
 }

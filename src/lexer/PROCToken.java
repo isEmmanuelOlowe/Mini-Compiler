@@ -10,11 +10,9 @@ public final class PROCToken extends Token {
 
   private String name;
   private String parameter;
-  private boolean userDefined;
   private ArrayList<Token> statements = new ArrayList<Token>();
   //private ArrayList<String> methods = new ArrayList<String>();
   //for in the event the class is dumb InvalidToken
-  private boolean isInvalid;
 
   /**
   * Identifies a PROC Token and determines it is of a valid form.
@@ -27,7 +25,6 @@ public final class PROCToken extends Token {
       //if isValidProc doesnt throw an exception then these parameters are set
       this.name = line[1];
       this.parameter = line[3];
-      this.isInvalid = true;
       Tokeniser.setActiveParameter(this.parameter);
       ErrorHandler.addName(this.name);
     }
