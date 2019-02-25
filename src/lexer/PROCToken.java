@@ -66,12 +66,9 @@ public final class PROCToken extends Token {
   * @return true if identifier is valid.
   */
   private static boolean checkIdentifier(String ident) {
-
-    boolean valid = false;
-    //logo only supports consistent casing of letters
-    if (ident.matches("[a-z]+") || ident.matches("[A-Z]+")) {
-      valid = true;
-    }
+    //checks first character is in set of letters and following can be numbers and letters
+    boolean valid = matches("[a-zA-Z][\\w]*");
+    ErrorHandler.addError("The identifier '" + ident + "' does not follow Logo Grammar Naming Conventions.");
     return valid;
   }
 
@@ -91,13 +88,13 @@ public final class PROCToken extends Token {
 
     }
     //checks if the first line of program is method
-    if(!line[0].equals("PROC")) {
+    else if(!line[0].equals("PROC")) {
       ErrorHandler.addError("First Line must be contain PROC method");
       valid = false;
     }
 
     //checks for expected brackets in method
-    if (line[2].equals("(")) {
+    else if (line[2].equals("(")) {
       if (!line[4].equals(")")) {
         ErrorHandler.addError(") - Bracket expected");
         valid = false;
