@@ -40,11 +40,21 @@ The steam of `PostScript` commands are printed to a `.ps` file with same name as
 
 ## Design
 
-[Justification for design decisions].
+###### Binary Expression Tree
+
+The binary expression tree is used to 'break down' expressions that are present in the given LOGO code. The operator with the lowest precedence is made the root of the tree. The number before this operator and the operator of next highest precedence are made children of the root operator. 
+
+For example, if the expression was `(6 + 3 * 2)` the number '6' and the operator '+' would be made children of the root operator '*'. 
+
+The number, in this case 6, is the primary expression. The operator is then made a new expression that 'searches' for the operator of next highest precedence, in this case '*'. From this either another operator is found or the two remaining numbers are made children of the operator and the end of the binary tree is reached.  
+
+
 
 ### Lexer
 
 ![](uml/Mini-Compiler-Lexer-Class-Diagrams.png)
+
+
 
 The following responsibilities:
 
@@ -74,9 +84,11 @@ We expected a valid `.ps` file to be produced. When opened in a text editor it v
 
 #### Actual Output
 
-![](testing/test case 1/Test Case 1.png)
+![](testing/test case 1/Test Case 1 - Code.png)
 
-![](testing/test case 1/Test Case 1 - Picture.png)
+![](testing/test case 1/Test Case 1 -  Picture.png)
+
+
 
 As you can see from the above outputs, the program successfully produces a valid post script file and thus a picture/fractal of, in this case, a 'dragon'.
 
@@ -92,7 +104,7 @@ The program should produce a valid `.ps` file and thus a picture/fractal of a dr
 
 ![](testing/test case 2/Test Case 2 - Code.png)
 
-![](/cs/home/gs221/Documents/Semester-2/CS1006/Mini-Compiler/testing/test case 2/Test Case 2 - Picture.png)
+![](testing/test case 2/Test Case 2 - Picture.png)
 
 The program successfully produces a valid `.ps` file and, in this case, a picture/fractal of a 'dragon'
 
@@ -106,15 +118,48 @@ The program should show multiple errors and their relevant information. For each
 
 #### Actual 
 
-![](/cs/home/gs221/Documents/Semester-2/CS1006/Mini-Compiler/testing/test case 3/Test Case 3 - Code.png)
+![](testing/test case 3/Test Case 3 - Code.png)
 
 The program successfully displays errors and their relevant information as described above.  
 
+### Test Case 4:
 
+This test was used to ensure that the binary expression tree worked correctly. The `dragon.t` file was edited and used to perform this test. The following lines were altered: 
+
+```PostScript
+LDRAGON (LEVEL - 1 ) was replaced with 
+LDRAGON ( LEVEL -  ( 1  * 5 ) + 4 + 10 - ( 2 * 5 ) )
+
+RDRAGON ( LEVEL - 1 ) was replaced with
+RDRAGON ( LEVEL - ( 1 + 1 - 1 + 1  - 5 * 2 + 9) )
+
+LDRAGON ( LEVEL -1 ) was replaced with 
+LDRAGON ( LEVEL - ( ( ( ( ( 1 ) ) ) ) ) )
+```
+
+#### Expected 
+
+If the binary expression tree works correctly, the `.ps` file that the compiler produces should be the same as the file produced by the original `dragon.t` file
+
+#### Actual 
+
+Edited LOGO program with complex mathematical expressions:
+
+![](testing/test case 4/Test Case 4 - LOGO.png)
+
+Post Script produced by the 'Mini-Compiler':
+
+![](testing/test case 4/Test Case 4 - Code.png)
+
+Picture/Fractal produced by the 'Mini-Compiler'
+
+![](testing/test case 4/Test Case 4 - Picture.png)
+
+As you can see. The fractal that the program produces is identical to that of the original`dragon.t` file. This shows that the binary expression tree works correctly. 
 
 ## Evaluation
 
-The specification required that a 'Mini-Compiler' be produced that translates LOGO to PostScript by use of provided starter code. Our solution successfully converts the given LOGO files to PostScript. 
+The specification required that a LOGO to PostScript compiler be produced that correctly translates LOGO to PostScript. As you can see from the above tests one and two, our program successfully translates LOGO code to PostScript. The compiler makes use a single register (Arg) and utilises a stack. The program contains an error reporting system which produces useful error information when syntactically incorrect code is found. The program recovers from these errors and continue to parse the code until the end of the file as shown in the third test case.
 
 ## Conclusion
 
