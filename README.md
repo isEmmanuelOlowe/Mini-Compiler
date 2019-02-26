@@ -7,19 +7,19 @@ Allows for conversion of Logo (`.t` files) to postscript (`.ps` adobe 3.0)
 To compile the classes
 
 ```bash
-javac LogoPSCompiler.java
+javac logoPrograms/LogoPSCompiler.java
 ```
 
 To run the program with a logo file in which all the commands are on new lines.
 
 ```bash
-java LogoPSCompiler <logo_file>
+java logoPrograms/LogoPSCompiler <logo_file>
 ```
 
 To run the program with a logo file in which all the commands are not on new lines.
 
 ```bash
-java LogoPSCompiler <logo_file> -n
+java logoPrograms/LogoPSCompiler <logo_file> -n
 ```
 
 ### Output
