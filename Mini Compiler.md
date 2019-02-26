@@ -159,9 +159,19 @@ As you can see. The fractal that the program produces is identical to that of th
 
 ## Evaluation
 
-The specification required that a LOGO to PostScript compiler be produced that correctly translates LOGO to PostScript. As you can see from the above tests one and two, our program successfully translates LOGO code to PostScript. The compiler makes use a single register (Arg) and utilises a stack. The program contains an error reporting system which produces useful error information when syntactically incorrect code is found. The program recovers from these errors and continue to parse the code until the end of the file as shown in the third test case.
+The specification required that a LOGO to PostScript compiler be produced that correctly translates LOGO to PostScript. As you can see from the above tests one and two, our program successfully translates LOGO code to PostScript. The compiler makes use of a single register (Arg) and utilises a stack. The program contains a gode generator which correctly 'prints' the translated LOGO code to a valid `.ps` file. The program also contains an error reporting system which produces useful error information when syntactically incorrect code is found. The program recovers from these errors and continue to parse the code until the end of the file as shown in the third test case. 
+
+As demonstrated above, the program that has been produced corresponds to the advanced deliverable as set out in the specification. 
 
 ## Conclusion
+
+The provided code package was successfully used alongside the specification to produce a 'Mini-Compiler' that translates LOGO into PostScript. This involved successfully implementing a lexer, used to convert the LOGO program into a series of tokens, and a parser, used to 'parse' the generated tokens into the appropriate data structure, and a code generator that produces the appropriate PostScript code. An error handler was also successfully implemented that produces insightful information when syntactically incorrect LOGO code is 'entered'. 
+
+### Difficulties 
+
+As we had to use a single register the value of arg had to be placed on the stack before we called a method. So Arg would be called then the parameters which are required to be inputed to the method would then be called and then the value of` Arg` is changed with `Arg exch def` then the method is called  and final `Arg exch def` sets `Arg` to its original value which sits at the bottom of this stack.
+
+### With More Time
 
 
 
