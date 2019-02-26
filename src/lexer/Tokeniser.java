@@ -205,9 +205,6 @@ public class Tokeniser {
     if (expression.length == 1) {
       compared = new PrimaryExpression(expression[0]);
     }
-    else if(expression.length == 3 && expression[0].equals("(") && expression[2].equals(")")) {
-      compared = new PrimaryExpression(expression[1]);
-    }
     else {
       compared = new BinaryExpression(expression);
     }
