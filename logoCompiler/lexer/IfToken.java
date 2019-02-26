@@ -1,8 +1,8 @@
-package lexer;
+package logoCompiler.lexer;
 
-import parser.Parser;
-import parser.PSDictionary;
-import parser.PSDictionary;
+import logoCompiler.parser.Parser;
+import logoCompiler.parser.PSDictionary;
+import logoCompiler.parser.PSDictionary;
 import java.util.Arrays;
 import java.util.ArrayList;
 

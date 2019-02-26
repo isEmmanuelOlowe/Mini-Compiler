@@ -1,6 +1,7 @@
-import lexer.*;
-import parser.*;
+package logoCompiler;
 
+import logoCompiler.lexer.*;
+import logoCompiler.parser.*;
 /**
 * The main class of the compiler program, will execute high level instructions.
 *
@@ -21,10 +22,6 @@ public class LogoPSCompiler {
       logoFileName = args[0];
       if (args.length == 2 && args[1].equals("-n")){
         seperated = false;
-      }
-      else{
-        //USAGE Information for program
-        System.out.println("USAGE: java LogoPSCompiler <logo_file> [-n](- if commands are seperated by new lines)");
       }
       psFileName = logoFileName.split("\\.")[0] + ".ps";
       //Tokenises The whole logo file

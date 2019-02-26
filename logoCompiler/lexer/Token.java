@@ -1,4 +1,4 @@
-package lexer;
+package logoCompiler.lexer;
 
 /**
 * Represens a Token

@@ -1,7 +1,7 @@
-package lexer;
+package logoCompiler.lexer;
 
 import java.util.ArrayList;
-import parser.Parser;
+import logoCompiler.parser.Parser;
 
 /**
 * Describes Tokenised form of PROC statement

@@ -1,4 +1,4 @@
-package lexer;
+package logoCompiler.lexer;
 
 import java.lang.Exception;
 import java.util.ArrayList;

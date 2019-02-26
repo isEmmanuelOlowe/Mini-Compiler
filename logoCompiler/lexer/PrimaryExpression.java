@@ -1,6 +1,6 @@
-package lexer;
+package logoCompiler.lexer;
 
-import parser.Parser;
+import logoCompiler.parser.Parser;
 
 /**
 * Object which represents primary expression.

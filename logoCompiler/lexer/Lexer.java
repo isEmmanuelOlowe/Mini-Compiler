@@ -1,4 +1,4 @@
-package lexer;
+package logoCompiler.lexer;
 
 import java.util.ArrayList;
 import java.io.FileReader;

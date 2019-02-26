@@ -1,6 +1,6 @@
-package parser;
+package logoCompiler.parser;
 
-import lexer.*;
+import logoCompiler.lexer.*;
 import java.util.ArrayList;
 import java.io.PrintWriter;
 import java.io.IOException;

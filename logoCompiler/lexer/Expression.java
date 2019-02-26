@@ -1,4 +1,4 @@
-package lexer;
+package logoCompiler.lexer;
 
 /**
 * An abstract class which represents an Expression.
