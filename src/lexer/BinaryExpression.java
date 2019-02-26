@@ -80,7 +80,7 @@ public final class BinaryExpression extends Expression {
   * Gets the index and depth of operator in mathematical statement.
   * Depth - how many brackets is the lowest precedence operator inside.
   * index - the integer location of the operator in the string array.
-  * Valid - In ther event that integer or identifier is inside brackets e.g. ( ( ( ( 1 ) ) ) )
+  * Valid - In the event that integer or identifier is inside brackets e.g. ( ( ( ( 1 ) ) ) )
   */
   private int[] findOperator(String line[]) {
 

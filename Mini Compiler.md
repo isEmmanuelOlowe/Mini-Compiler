@@ -64,17 +64,19 @@ The following responsibilities have been assigned to the lexer package:
 
 #### Syntax Checking
 
-When a specific token is identified all preceding characters much has a corresponding value or else it. So all these tokens which then allow for identification of preceding input were made into TokenClasses:
+When a specific token is identified all preceding characters much has a corresponding value or else it. So all these tokens which then allow for identification of preceding input were made into Token Classes:
 
 *  `IFToken` 
 * `PROCToken`
 * `StatementToken`
 
-From there the proceeding input could then be checked to see if it meets expected. The Erro
+From there the proceeding input could then be checked to see if it meets expected. The Error would be notified when there is deviation from this expectation.
 
 #### Semantic Analysis
 
-The program adds all the 
+The program is able to determine if identifies used in statements were actually declared before use. This would using the active parameter in the `Tokeniser` class. The class stores the `Identifier` name of the parameter which was declared in the `PROC` statement and if this so anything which does not have the same name or isn't a number must be incorrect placed in code. 
+
+Every method called inside all the `PROCToken` have their names stored in a list of method calls and details about that method are also stored. e.g. line number, the actual input. The list of method calls is then compared to the names of all the `PROCToken` and it is not in the list then a method which has not been declared is being ran.
 
 #### Binary Expression Tree
 
@@ -185,9 +187,18 @@ As you can see. The fractal that the program produces is identical to that of th
 
 ## Evaluation
 
-The specification required that a LOGO to `PostScript` compiler be produced that correctly translates LOGO to `PostScript`. As you can see from the above tests one and two, our program successfully translates LOGO code to `PostScript`. The compiler makes use a single register (`Arg`) and utilises a stack. The program contains an error reporting system which produces useful error information when syntactically incorrect code is found. The program recovers from these errors and continue to parse the code until the end of the file as shown in the third test case.
+The specification required that a LOGO to PostScript compiler be produced that correctly translates LOGO to PostScript. As you can see from the above tests one and two, our program successfully translates LOGO code to PostScript. The compiler makes use of a single register (Arg) and utilises a stack. The program contains a gode generator which correctly 'prints' the translated LOGO code to a valid `.ps` file. The program also contains an error reporting system which produces useful error information when syntactically incorrect code is found. The program recovers from these errors and continue to parse the code until the end of the file as shown in the third test case. 
 
+As demonstrated above, the program that has been produced corresponds to the advanced deliverable as set out in the specification. 
 ## Conclusion
 
+The provided code package was successfully used alongside the specification to produce a 'Mini-Compiler' that translates LOGO into PostScript. This involved successfully implementing a lexer, used to convert the LOGO program into a series of tokens, and a parser, used to 'parse' the generated tokens into the appropriate data structure, and a code generator that produces the appropriate PostScript code. An error handler was also successfully implemented that produces insightful information when syntactically incorrect LOGO code is 'entered'. 
 
+### Difficulties 
 
+As we had to use a single register the value of arg had to be placed on the stack before we called a method. So Arg would be called then the parameters which are required to be inputed to the method would then be called and then the value of` Arg` is changed with `Arg exch def` then the method is called  and final `Arg exch def` sets `Arg` to its original value which sits at the bottom of this stack.
+
+### With More Time
+
+* Could have created our own fractals to test the program with.
+* Implementation of For Loops in Logo could have been produced.

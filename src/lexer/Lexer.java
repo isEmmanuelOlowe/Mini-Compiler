@@ -55,7 +55,7 @@ public final class Lexer {
     }
     catch (IOException ex) {
       procTokens = null;
-      System.out.println("Error readin file '" + logoFile + "'");
+      System.out.println("Error reading file '" + logoFile + "'");
     }
     return procTokens;
   }
@@ -67,7 +67,7 @@ public final class Lexer {
   */
   private void process(String sLine) {
 
-    //cheks line is no empty
+    //checks line is not empty
     if ((!sLine.isEmpty() && !sLine.trim().equals("") && !sLine.trim().equals("\n"))) {
       ErrorHandler.addString(sLine);
       //makes sure there is space between brackets and splits by white space
