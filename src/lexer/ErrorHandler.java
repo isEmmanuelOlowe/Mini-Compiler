@@ -3,14 +3,24 @@ package lexer;
 import java.lang.Exception;
 import java.util.ArrayList;
 
+/**
+* This class Handles Errors found when attempting compilation of the logo code.
+* It has a ledger of all the errors with the errors which have occured when attempting analysis
+*/
+
 public final class ErrorHandler {
 
+  //The ledger for errors which have occured
   private static ArrayList<String> errorsOccured = new ArrayList<String>();
+  //For storing the methods which have been called to ensure methods which do not have PROC declarations are not called.
   private static ArrayList<String> methodCalls = new ArrayList<String>();
+  //Stores corresponding data to methodCalls incase they have not been decalred so the error can been printed at line.
   private static ArrayList<String> methodDetails = new ArrayList<String>();
+  //Stores the name of any PROC statements which have been declared.
   private static ArrayList<String> PROCNames = new ArrayList<String>();
   //The line number of the current line being read
   private static int currentLine = 0;
+  //Stores the line data for the line currently being proceeded
   private static String currentString;
 
   /**
@@ -29,8 +39,9 @@ public final class ErrorHandler {
   * @param ErrorMessage the errror message that was reported
   */
   public static void addError(String ErrorMessage) {
-
+    //constructs the error message that will be printed
     String error = ErrorMessage +  " - LINE " + currentLine + ": " + currentString;
+    //add the error message to the list of errors
     errorsOccured.add(error);
   }
 
@@ -40,8 +51,9 @@ public final class ErrorHandler {
   * @param name the name of the called method.
   */
   public static void addMethodCall(String name){
-
+    //Adds the methods name to the list of Methods called in program.
     methodCalls.add(name);
+    //Adds corresponsing information about the line in case of error.
     methodDetails.add("Line " + currentLine + ": " + currentString);
   }
 
