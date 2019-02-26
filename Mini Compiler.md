@@ -32,7 +32,7 @@ The functionally In which the program requires has been split in to 3 separate s
 
 * Parsing
 
-A Token is a element of a programming language. When a token is identified certain characters or patterns of characters are expected afterwards. It would be unnecessary to create classes for every single possible type of token as certain tokens would automatically imply others. Such as `PROC` is always followed by an identifier naming the procedure.  So using this we can then directly parse the input when certain Tokens are found. 
+A Token is a element of a programming language. When a token is identified, certain characters or patterns of characters are expected afterwards. It would be unnecessary to create classes for every single possible type of token as certain tokens would automatically imply others. Such as `PROC` is always followed by an identifier naming the procedure.  So using this we can then directly parse the input when certain Tokens are found. 
 
 All Logo Statements run inside of `PROC` so All statements must be children of there `PROC` tokens. So when a `PROC` declaration is found it following the all the proceeding code until it finds another `PROC` token belongs to that token. From this we can then have all `PROCToken` contain `StatementToken`.  Methods Calls and `LEFT`, `RIGHT`, `FORWARD` behave similarly in Logo. e.g. they method has a name and expression that it takes in. So there behaviour can be generalised into a class. The `IF` statements in Logo behaviour is different from that of Method calls and `LEFT`, `RIGHT`, `FORWARD`. Since If statements contain statements and have conditions. So there behaviour would have to be a separate class. When a line begins with `PROC` it automatically identifies a `PROC`  and then following input will be assume to be part of `PROC` declaration and then following code until another `PROC` is found shall be stored inside of this `PROCToken`. When a line begins with `IF` it shall automatically identify a IF token and expect a `THEN` to complete the statement and everything inside is assumed to be the conditions which are required for `IF` statement to run. Everything comes after is assumed to be part of that if statements of the `IF` token if all the conditions are met. When the program shall find a `ELSE` token. All the input proceed shall be assumed to be part of `IFToken` if condition has failed. The `IFToken` would then be close when `ENDIF` is found.
 
@@ -74,7 +74,7 @@ From there the proceeding input could then be checked to see if it meets expecte
 
 #### Semantic Analysis
 
-The program is able to determine if identifies used in statements were actually declared before use. This would using the active parameter in the `Tokeniser` class. The class stores the `Identifier` name of the parameter which was declared in the `PROC` statement and if this so anything which does not have the same name or isn't a number must be incorrect placed in code. 
+The program is able to determine if identifiers used in statements were actually declared before use. This would using the active parameter in the `Tokeniser` class. The class stores the `Identifier` name of the parameter which was declared in the `PROC` statement and if this so anything which does not have the same name or isn't a number must be incorrect placed in code. 
 
 Every method called inside all the `PROCToken` have their names stored in a list of method calls and details about that method are also stored. e.g. line number, the actual input. The list of method calls is then compared to the names of all the `PROCToken` and it is not in the list then a method which has not been declared is being ran.
 
@@ -187,7 +187,7 @@ As you can see. The fractal that the program produces is identical to that of th
 
 ## Evaluation
 
-The specification required that a LOGO to PostScript compiler be produced that correctly translates LOGO to PostScript. As you can see from the above tests one and two, our program successfully translates LOGO code to PostScript. The compiler makes use of a single register (Arg) and utilises a stack. The program contains a gode generator which correctly 'prints' the translated LOGO code to a valid `.ps` file. The program also contains an error reporting system which produces useful error information when syntactically incorrect code is found. The program recovers from these errors and continue to parse the code until the end of the file as shown in the third test case. 
+The specification required that a LOGO to PostScript compiler be produced that correctly translates LOGO to PostScript. As you can see from the above (tests one and two), our program successfully translates LOGO code to PostScript. The compiler makes use of a single register (Arg) and utilises a stack. The program contains a gode generator which correctly 'prints' the translated LOGO code to a valid `.ps` file. The program also contains an error reporting system which produces useful error information when syntactically incorrect code is found. The program recovers from these errors and continue to parse the code until the end of the file as shown in the third test case. 
 
 As demonstrated above, the program that has been produced corresponds to the advanced deliverable as set out in the specification. 
 ## Conclusion
