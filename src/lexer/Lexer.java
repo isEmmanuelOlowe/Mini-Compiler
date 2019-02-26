@@ -50,9 +50,11 @@ public final class Lexer {
     //Error catching for file
     }
     catch (FileNotFoundException ex) {
+      procTokens = null;
       System.out.println("Unable to open file '" + logoFile + "'");
     }
     catch (IOException ex) {
+      procTokens = null;
       System.out.println("Error readin file '" + logoFile + "'");
     }
     return procTokens;

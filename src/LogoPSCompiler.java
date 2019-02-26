@@ -22,9 +22,11 @@ public class LogoPSCompiler {
       }
       psFileName = logoFileName.split("\\.")[0] + ".ps";
       //Tokenises The whole logo file
+      //If the file is not found or there is some IOException lex returns null
       Parser.t = lexer.lex(logoFileName, seperated);
+      //checks for file error
       //checks if any errors occured in the parsing of the file.
-      if (ErrorHandler.areErrors()) {
+      if (ErrorHandler.areErrors() || Parser.t == null) {
         //reports the errors occured to the user
         ErrorHandler.reportErrors();
       }
