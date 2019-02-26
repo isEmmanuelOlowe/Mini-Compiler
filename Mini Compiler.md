@@ -26,29 +26,25 @@ Here are rules that were extrapolated from the provided Logo Grammar and example
 
 The functionally In which the program requires has been split in to 3 separate sections. 
 
-#### Lexical Analysis
+#### Lexer
 
-Converts the Logo code to stream of `PROC` tokens. The `PROC` tokens contain the code which runs  the method with it. Each type of logo command shall be made into a type of `Token`. This section of code shall also be responsible for the checking for that the logo file has the correct syntax as well. The lexer shall also be able to parse a logo file in which all the commands have not been separated by new lines.
+* Lexical Analysis
+
+* Parsing
+
+A Token is a element of a programming language. When a token is identified certain characters or patterns of characters are expected afterwards. It would be unnecessary to create classes for every single possible type of token as certain tokens would automatically imply others. Such as `PROC` is always followed by an identifier naming the procedure.  So using this we can then directly parse the input when certain Tokens are found. 
+
+All Logo Statements run inside of `PROC` so All statements must be children of there `PROC` tokens. So when a `PROC` declaration is found it following the all the proceeding code until it finds another `PROC` token belongs to that token. From this we can then have all `PROCToken` contain `StatementToken`.  Methods Calls and `LEFT`, `RIGHT`, `FORWARD` behave similarly in Logo. e.g. they method has a name and expression that it takes in. So there behaviour can be generalised into a class. The `IF` statements in Logo behaviour is different from that of Method calls and `LEFT`, `RIGHT`, `FORWARD`. Since If statements contain statements and have conditions. So there behaviour would have to be a separate class. When a line begins with `PROC` it automatically identifies a `PROC`  and then following input will be assume to be part of `PROC` declaration and then following code until another `PROC` is found shall be stored inside of this `PROCToken`. When a line begins with `IF` it shall automatically identify a IF token and expect a `THEN` to complete the statement and everything inside is assumed to be the conditions which are required for `IF` statement to run. Everything comes after is assumed to be part of that if statements of the `IF` token if all the conditions are met. When the program shall find a `ELSE` token. All the input proceed shall be assumed to be part of `IFToken` if condition has failed. The `IFToken` would then be close when `ENDIF` is found.
+
+So in the Lexer Converts the Logo code to stream of `PROC` tokens. The `PROC` tokens contain the code which runs  the method with it. Each type of logo command shall be made into a type of `Token`. This section of code shall also be responsible for the checking for that the logo file has the correct syntax as well. The lexer shall also be able to parse a logo file in which all the commands have not been separated by new lines.
 
 #### Parsing
 
-Gets all the commands that are required to be printed to the file from all the tokens which have been created.
+* Code Generation
 
-#### Code Generation
-
-The steam of `PostScript` commands are printed to a `.ps` file with same name as inputted to program.
+Gets all the commands that are required to be printed to the file from all the tokens which have been created. The steam of `PostScript` commands are printed to a `.ps` file with same name as inputted to program.
 
 ## Design
-
-###### Binary Expression Tree
-
-The binary expression tree is used to 'break down' expressions that are present in the given LOGO code. The operator with the lowest precedence is made the root of the tree. The number before this operator and the operator of next highest precedence are made children of the root operator. 
-
-For example, if the expression was `(6 + 3 * 2)` the number '6' and the operator '+' would be made children of the root operator '*'. 
-
-The number, in this case 6, is the primary expression. The operator is then made a new expression that 'searches' for the operator of next highest precedence, in this case '*'. From this either another operator is found or the two remaining numbers are made children of the operator and the end of the binary tree is reached.  
-
-
 
 ### Lexer
 
@@ -56,7 +52,7 @@ The number, in this case 6, is the primary expression. The operator is then made
 
 
 
-The following responsibilities:
+The following responsibilities have been assigned to the lexer package:
 
 * Syntax Checking.
 * Determining If  `If statements` have been closed.
@@ -66,11 +62,41 @@ The following responsibilities:
 * Binary Expression Tree Implementation.
 * Determining if calculations are in the correct format.
 
-It was determined
+#### Syntax Checking
+
+When a specific token is identified all preceding characters much has a corresponding value or else it. So all these tokens which then allow for identification of preceding input were made into TokenClasses:
+
+*  `IFToken` 
+* `PROCToken`
+* `StatementToken`
+
+From there the proceeding input could then be checked to see if it meets expected. The Erro
+
+#### Semantic Analysis
+
+The program adds all the 
+
+#### Binary Expression Tree
+
+The binary expression tree is used to 'break down' expressions that are present in the given LOGO code. The operator with the lowest precedence is made the root of the tree. The number before this operator and the operator of next highest precedence are made children of the root operator. 
+
+For example, if the expression was `(6 + 3 * 2)` the number `6` and the operator `'` would be made children of the root operator `*`. 
+
+The number, in this case 6, is the primary expression. The operator is then made a new expression that 'searches' for the operator of next highest precedence, in this case `*`. From this either another operator is found or the two remaining numbers are made children of the operator and the end of the binary tree is reached.
+
+The Algorithm was also expanded to factor for in the event that a number is enclose in brackets 
+
+e.g. `( ( (  1 ) ) )`
 
 ### Parser
 
 ![](uml/Mini-Compiler-Parser-Class-Diagrams.png)
+
+The following responsibilities have been assigned to the parser package:
+
+* Initialising the conversion of `Logo` to `PostScript`.
+* Storing all the `PostScript` that has to be printed to the `PostScript` File. 
+* Outputting the code to the `PostScript`.
 
 ## Testing
 
@@ -159,7 +185,7 @@ As you can see. The fractal that the program produces is identical to that of th
 
 ## Evaluation
 
-The specification required that a LOGO to PostScript compiler be produced that correctly translates LOGO to PostScript. As you can see from the above tests one and two, our program successfully translates LOGO code to PostScript. The compiler makes use a single register (Arg) and utilises a stack. The program contains an error reporting system which produces useful error information when syntactically incorrect code is found. The program recovers from these errors and continue to parse the code until the end of the file as shown in the third test case.
+The specification required that a LOGO to `PostScript` compiler be produced that correctly translates LOGO to `PostScript`. As you can see from the above tests one and two, our program successfully translates LOGO code to `PostScript`. The compiler makes use a single register (`Arg`) and utilises a stack. The program contains an error reporting system which produces useful error information when syntactically incorrect code is found. The program recovers from these errors and continue to parse the code until the end of the file as shown in the third test case.
 
 ## Conclusion
 

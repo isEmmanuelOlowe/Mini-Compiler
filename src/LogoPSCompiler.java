@@ -12,13 +12,19 @@ public class LogoPSCompiler {
     String logoFileName;
     String psFileName;
 
+    //Lexical Analyser is Object is created
     Lexer lexer = new Lexer();
 
+    //Command line arguments are processed.
     if (args.length >= 1) {
       boolean seperated = true;
       logoFileName = args[0];
       if (args.length == 2 && args[1].equals("-n")){
         seperated = false;
+      }
+      else{
+        //USAGE Information for program
+        System.out.println("USAGE: java LogoPSCompiler <logo_file> [-n](- if commands are seperated by new lines)");
       }
       psFileName = logoFileName.split("\\.")[0] + ".ps";
       //Tokenises The whole logo file
